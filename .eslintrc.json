@@ -1,0 +1,65 @@
+{
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "env": {
+        "browser": true
+    },
+    "rules": {
+        "strict": [
+            "error",
+            "global"
+        ],
+        // Valeurs par défaut :
+        // "no-undef": "warn",
+        // "no-use-before-define": "error",
+        "camelcase": "warn",
+        "comma-style": [
+            "warn",
+            "last"
+        ],
+        "no-lonely-if": "warn",
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-var": "warn",
+        "no-unused-vars": "warn",
+        "quotes": [
+            "warn",
+            "double"
+        ],
+        // https://eslint.org/docs/latest/rules/require-jsdoc
+        "require-jsdoc": [
+            "warn",
+            {
+                "require": {
+                    "FunctionDeclaration": true,
+                    "MethodDefinition": false,
+                    "ClassDeclaration": false,
+                    "ArrowFunctionExpression": false,
+                    "FunctionExpression": false
+                }
+            }
+        ],
+        //https://eslint.org/docs/latest/rules/valid-jsdoc
+        "valid-jsdoc": [
+            "warn",
+            {
+                "requireReturn": false,
+                "requireParamDescription": true,
+                "requireParamType": false,
+                "requireReturnDescription": true,
+                "requireReturnType": false,
+                "prefer": {
+                    "arg": "param",
+                    "argument": "param",
+                    "class": "constructor",
+                    "return": "returns",
+                    "virtual": "abstract"
+                }
+            }
+        ]
+    }
+}

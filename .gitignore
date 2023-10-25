@@ -1,0 +1,4 @@
+#fichiers ignorés des styles
+
+/css
+*.css*
