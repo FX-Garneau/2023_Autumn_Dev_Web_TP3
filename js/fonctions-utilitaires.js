@@ -1,10 +1,6 @@
 "use strict";
 
 /**
- * Fonctions utilitaires 
- */
-
-/**
  * Permet d'ajouter un paragraphe (p) à la fin du <body> Si des éléments existent déjà dans le <body>, le paragraphe sera ajouté à la suite des éléments existants..
  * @param {*} valeur Valeur à afficher dans la page.
   */
