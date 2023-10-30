@@ -43,7 +43,6 @@ function creerCards(pImage, pTitre, pDescription) {
    nouvElementDivCol.classList.add("col-md-12");
    nouvElementDivCol.classList.add("mb-3");
    nouvElementDivCol.classList.add("d-flex");
-   nouvElementDivCol.classList.add("align-items-top");
    elementHTMLPourInsererLaCards.appendChild(nouvElementDivCol);
 
    let nouvElementDivCard = document.createElement("div");
@@ -142,6 +141,17 @@ function afficherRetroaction(pEstRetroToasts, idToast) {
  * @param {*} pCategorie Catégorie choisie
  */
 function filtrerModules(pModule, pDescription, pCategorie) {
-   let vect
+   let vectModulesFiltres = [];
+   for (let module of DATA_QUIZ.modules) {
+      if (module.description == pDescription || module.titre == pModule) {
+         vectModulesFiltres.push(module);
+      }
+
+      for (let module of DATA_QUIZ.banque_questions) {
+         if (module.categories == pCategorie) {
+            vectModulesFiltres.push(module);
+         }
+      }
+   }
 }
 addEventListener("load", initialisation, false);
