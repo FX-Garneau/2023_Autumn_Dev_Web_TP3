@@ -25,98 +25,108 @@
     <h1>Javascript</h1>
     <main>
         <div class="row container">
-            <div class="col-12">
+            <div class="p-0 col-lg-12">
                 <h2>Questionnaire formatif</h2>
                 <h3>Filtres</h3>
-                <div class="accordion" id="accordionFiltres">
-                    <div class="accordion-item bg-secondary">
-                        <form action="mailto:thdur001@edu.cegepgarneau.ca" method="post">
-                            <div class="col-lg-6">
-                                <fieldset>
-                                    <legend>Description</legend>
-                                    <div class="input-group">
-                                        <div class="form-outline">
-                                            <label class="form-label" for="form1">Mot-Clé</label>
-                                            <input type="search" id="form1" class="form-control" />
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                          Filtres de recherche
+                        </button>
+                      </h2>
+                      <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">                      
+                                <form action="mailto:thdur001@edu.cegepgarneau.ca" method="post">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <fieldset>
+                                                <legend>Description</legend>
+                                                <div class="input-group">
+                                                    <div class="form-outline">
+                                                        <label class="form-label" for="form1">Mot-Clé</label>
+                                                        <input type="search" id="form1" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset>
+                                                <legend>Modules</legend>
+                                                <label class="form-label" for="choixModule">Choix du module</label>
+                                                <select class="form-select" aria-label="Default select example" id="choixModule">
+                                                    <option selected>Modules</option>
+                                                    <option value="1">Module 1</option>
+                                                    <option value="2">Module 2</option>
+                                                    <option value="3">Module 3</option>
+                                                    <option value="4">Module 4</option>
+                                                    <option value="5">Module 5</option>
+                                                    <option value="6">Module 6</option>
+                                                </select>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-lg-6 m-lg-0 p-0">
+                                            <fieldset>
+                                                <legend>Catégories</legend>
+                                                <div class="w-50">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="HTML"></input>
+                                                        <label class="form-check-label" for="HTML">
+                                                            HTML
+                                                        </label>
+                                                    </div>
+            
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="CSS" checked></input>
+                                                        <label class="form-check-label" for="CSS">
+                                                            CSS
+                                                        </label>
+                                                    </div>
+            
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="Bootstrap"></input>
+                                                        <label class="form-check-label" for="Boostrap">
+                                                            Bootstrap
+                                                        </label>
+                                                    </div>
+                                                </div>
+            
+                                                <div class="w-50">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="Javascrip"
+                                                            checked></input>
+                                                        <label class="form-check-label" for="Javascrip">
+                                                            Javascrip
+                                                        </label>
+                                                    </div>
+            
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="Formulaires"></input>
+                                                        <label class="form-check-label" for="Formulaires">
+                                                            Formulaires
+                                                        </label>
+                                                    </div>
+            
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="Autres"
+                                                            checked></input>
+                                                        <label class="form-check-label" for="Autres">
+                                                            ...
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <button type="button" class="btn btn-primary">Filtrer</button>
+                                            <button type="button" class="btn btn-primary">Tout afficher</button>
                                         </div>
                                     </div>
-                                </fieldset>
-                                <fieldset>
-                                    <legend>Modules</legend>
-                                    <label class="form-label" for="choixModule">Choix du module</label>
-                                    <select class="form-select" aria-label="Default select example" id="choixModule">
-                                        <option selected>Modules</option>
-                                        <option value="1">Module 1</option>
-                                        <option value="2">Module 2</option>
-                                        <option value="3">Module 3</option>
-                                        <option value="4">Module 4</option>
-                                        <option value="5">Module 5</option>
-                                        <option value="6">Module 6</option>
-                                    </select>
-                                </fieldset>
-
+                                </form>
                             </div>
-                            <div class="col-lg-6">
-                                <fieldset>
-                                    <legend>Catégories</legend>
-                                    <div class="w-50">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="HTML">
-                                            <label class="form-check-label" for="HTML">
-                                                HTML
-                                            </label>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="CSS" checked>
-                                            <label class="form-check-label" for="CSS">
-                                                CSS
-                                            </label>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="Bootstrap">
-                                            <label class="form-check-label" for="Boostrap">
-                                                Bootstrap
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="w-50">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="Javascrip"
-                                                checked>
-                                            <label class="form-check-label" for="Javascrip">
-                                                Javascrip
-                                            </label>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="Formulaires">
-                                            <label class="form-check-label" for="Formulaires">
-                                                Formulaires
-                                            </label>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="Autres"
-                                                checked>
-                                            <label class="form-check-label" for="Autres">
-                                                ...
-                                            </label>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <button type="button" class="btn btn-primary">Filtrer</button>
-                                <button type="button" class="btn btn-primary">Tout afficher</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row container">
-            <div class="col-12 bg-primary">
+            <div class="bg-primary">
                 <h3>Création du questionnaire</h3>
                 <p>après voir utilisé les filtres, cliquez sur le bouton pour faire les test</p>
                 <p>Si vous ne filtrez pas, le test sera basé sur tous les modules.</p>
@@ -127,7 +137,7 @@
                 </div>
             </div>
         </div>
-        <div id="modules">
+        <div id="modules" class="row">
 
         </div>
     </main>
