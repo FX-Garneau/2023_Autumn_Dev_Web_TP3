@@ -34,6 +34,8 @@ function creerCards(pImage, pTitre, pDescription) {
    nouvElementDivCol.classList.add("col-lg-4");
    nouvElementDivCol.classList.add("col-md-12");
    nouvElementDivCol.classList.add("mb-3");
+   nouvElementDivCol.classList.add("d-flex");
+   nouvElementDivCol.classList.add("align-items-top");
    elementHTMLPourInsererLaCards.appendChild(nouvElementDivCol);
 
    let nouvElementDivCard = document.createElement("div");
@@ -123,5 +125,15 @@ function afficherRetroaction(pEstRetroToasts, idToast) {
    else {
       afficherToasts(idToast, TITRETOAST, DATA_QUIZ.banque_questions.retroactionNegative);
    }
+}
+
+/**
+ * Créer un nouveau tableau d’objets (variable globale) basé sur le tableau nommé modules. 
+ * @param {*} pModule Nom du module choisi
+ * @param {*} pDescription Eléments de description choisis
+ * @param {*} pCategorie Catégorie choisie
+ */
+function filtrerModules(pModule, pDescription, pCategorie) {
+   let vect
 }
 addEventListener("load", initialisation, false);
