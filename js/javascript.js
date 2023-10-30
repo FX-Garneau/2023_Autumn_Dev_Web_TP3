@@ -1,16 +1,9 @@
 /* eslint-disable no-undef */
-/**
- *  Fichier principal javascript
- */
 "use strict";
+
 const IDTOASTAFFICHER = "div";
 const TITRETOAST = "Bonne réponse!";
 
-/*************
-    Cette fonction est rattachée à l'événement "Load". 
-    C'est la première fonction qui va s'executer lorsque 
-    la page sera entièrement chargée.
-**************/
 function initialisation() {
 
    console.log("slaut");
@@ -22,7 +15,6 @@ function initialisation() {
       let descriptionImage = module.description;
       creerCards(cheminImage, titreImage, descriptionImage);
    }
-
 
 }
 

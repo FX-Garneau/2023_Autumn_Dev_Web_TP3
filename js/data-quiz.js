@@ -1,9 +1,6 @@
-/**
-    Données pour le quiz
- */
+// eslint-disable-next-line no-unused-vars
 "use strict";
 
-// eslint-disable-next-line no-unused-vars
 const DATA_QUIZ = {
    modules: [
       { titre: "Révision", imgModule: "m00.png", description: "Révision des concepts d'interfaces Web en passant par le seign, la structure d'une page web, des bases des règles de styles CSS, la conception de formulaires et des différentes dispositions possibles dont (grid, flex, inline-block, etc.] ou encore du positionnement [relative/absolute, fixed et sticky])" },
