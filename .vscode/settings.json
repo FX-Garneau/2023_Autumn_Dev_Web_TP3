@@ -1,0 +1,9 @@
+{
+   "editor.formatOnSave": true,
+   "editor.formatOnPaste": true,
+   "editor.formatOnType": true,
+   "diffEditor.wordWrap": "off",
+   "workbench.tree.indent": 12,
+   "editor.tabSize": 3,
+   "editor.detectIndentation": false,
+}
