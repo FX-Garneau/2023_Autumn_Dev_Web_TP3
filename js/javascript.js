@@ -38,21 +38,13 @@ partir des paramètres pour personnaliser l’image, le titre et la description.
 function creerCards(pImage, pTitre, pDescription) {
    let elementHTMLPourInsererLaCards = document.getElementById("modules");
 
-<<<<<<< HEAD
-    let nouvElementDivCol = document.createElement("div");
-    nouvElementDivCol.classList.add("col-lg-4");
-    nouvElementDivCol.classList.add("col-md-12");
-    nouvElementDivCol.classList.add("mb-3");
-    nouvElementDivCol.classList.add("d-flex");
-    nouvElementDivCol.classList.add("align-items-top");
-    elementHTMLPourInsererLaCards.appendChild(nouvElementDivCol);
-=======
    let nouvElementDivCol = document.createElement("div");
    nouvElementDivCol.classList.add("col-lg-4");
    nouvElementDivCol.classList.add("col-md-12");
    nouvElementDivCol.classList.add("mb-3");
+   nouvElementDivCol.classList.add("d-flex");
+   nouvElementDivCol.classList.add("align-items-top");
    elementHTMLPourInsererLaCards.appendChild(nouvElementDivCol);
->>>>>>> ed45d397ed6e760822d8ba74040c9b9a084f1792
 
    let nouvElementDivCard = document.createElement("div");
    nouvElementDivCard.classList.add("card");
@@ -149,7 +141,7 @@ function afficherRetroaction(pEstRetroToasts, idToast) {
  * @param {*} pDescription Eléments de description choisis
  * @param {*} pCategorie Catégorie choisie
  */
-function filtrerModules(pModule, pDescription, pCategorie){
-let vect
+function filtrerModules(pModule, pDescription, pCategorie) {
+   let vect
 }
 addEventListener("load", initialisation, false);
