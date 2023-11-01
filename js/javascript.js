@@ -31,10 +31,7 @@ function creerCards(pImage, pTitre, pDescription) {
    let elementHTMLPourInsererLaCards = document.getElementById("modules");
 
    let nouvElementDivCol = document.createElement("div");
-   nouvElementDivCol.classList.add("col-lg-4");
-   nouvElementDivCol.classList.add("col-md-12");
-   nouvElementDivCol.classList.add("mb-3");
-   nouvElementDivCol.classList.add("d-flex");
+   nouvElementDivCol.className = "col-lg-4 col-md-12 mb-3 d-flex";
    elementHTMLPourInsererLaCards.appendChild(nouvElementDivCol);
 
    let nouvElementDivCard = document.createElement("div");
@@ -55,8 +52,7 @@ function creerCards(pImage, pTitre, pDescription) {
    nouvElementDivCard.appendChild(nouvElementDivCardBody);
 
    let nouvElementH3CardTitle = document.createElement("h3");
-   nouvElementH3CardTitle.classList.add("card-title");
-   nouvElementH3CardTitle.classList.add("text-center");
+   nouvElementH3CardTitle.className = "card-title text-center";
    nouvElementH3CardTitle.textContent = pTitre;
    nouvElementDivCardBody.appendChild(nouvElementH3CardTitle);
 
