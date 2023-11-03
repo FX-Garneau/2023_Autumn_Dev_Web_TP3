@@ -4,18 +4,13 @@
 const IDTOASTAFFICHER = "div";
 const TITRETOAST = "Bonne réponse!";
 
+/**
+ * Fonction qui permet d'initialiser toutes les autres fonctions après que la page soit chargée.
+ */
 function initialisation() {
 
-   console.log("slaut");
    console.log(DATA_QUIZ);
-
-   for (let module of DATA_QUIZ.modules) {
-      let cheminImage = "/images/modules/" + module.imgModule;
-      let titreImage = module.titre;
-      let descriptionImage = module.description;
-      creerCards(cheminImage, titreImage, descriptionImage);
-   }
-
+   afficherCards();
 }
 
 /**Section des fonction à Thierry Durand */
@@ -62,6 +57,17 @@ function creerCards(pImage, pTitre, pDescription) {
    nouvElementPCardText.textContent = pDescription;
 }
 
+/**
+ * Fonction qui permet d'afficher les cards à partir de la fonction creerCards
+ */
+function afficherCards() {
+   for (let module of DATA_QUIZ.modules) {
+      let cheminImage = "/images/modules/" + module.imgModule;
+      let titreImage = module.titre;
+      let descriptionImage = module.description;
+      creerCards(cheminImage, titreImage, descriptionImage);
+   }
+}
 /**
  * Fonction qui permet de créer la structure du toasts à partir des
 paramètres passés.
@@ -122,24 +128,23 @@ function afficherRetroaction(pEstRetroToasts, idToast) {
    }
 }
 
+
 /**
- * Créer un nouveau tableau d’objets (variable globale) basé sur le tableau nommé modules. 
+ * Trouver un module correspondant aux critères de recherche 
  * @param {*} pModule Nom du module choisi
  * @param {*} pDescription Eléments de description choisis
  * @param {*} pCategorie Catégorie choisie
  */
 function filtrerModules(pModule, pDescription, pCategorie) {
-   let vectModulesFiltres = [];
-   for (let module of DATA_QUIZ.modules) {
-      if (module.description == pDescription || module.titre == pModule) {
-         vectModulesFiltres.push(module);
-      }
+   let moduleCorrespondant;
 
-      for (let module of DATA_QUIZ.banque_questions) {
-         if (module.categories == pCategorie) {
-            vectModulesFiltres.push(module);
-         }
+   for (let module of DATA_QUIZ.modules) {
+      if (module.description.includes(pDescription) || module.titre == pModule || module.categories.includes(pCategorie)) {
+         moduleCorrespondant = module;
+         break;
       }
    }
+   return moduleCorrespondant;
 }
+
 addEventListener("load", initialisation, false);
