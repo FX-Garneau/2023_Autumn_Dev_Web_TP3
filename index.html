@@ -22,120 +22,126 @@
 
 <body class="container">
 
-    <h1>Javascript</h1>
-    <main>
+   <header class="d-flex justify-content-between align-items-center" style="padding-inline: 5rem;">
+      <img class="bg-secondary" style="height: 5rem;" src="images/Logo-05B-dev-web-client.png">
+      <button class="btn btn-danger">Consulter mes réponses</button>
+   </header>
+   <main>
+      <img class="img-fluid" src="images/hero.jpg">
+      <div class="p-0 col-lg-12">
+         <h2>Questionnaire formatif</h2>
+         <h3>Filtres</h3>
+         <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+               <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                     data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                     Filtres de recherche
+                  </button>
+               </h2>
+               <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                     <form action="mailto:thdur001@edu.cegepgarneau.ca" method="post">
+                        <div class="row">
+                           <div class="col-lg-6">
+                              <fieldset>
+                                 <legend>Description</legend>
+                                 <div class="input-group">
+                                    <div class="form-outline">
+                                       <label class="form-label" for="form1">Mot-Clé</label>
+                                       <input type="search" id="form1" class="form-control" />
+                                    </div>
+                                 </div>
+                              </fieldset>
+                              <fieldset>
+                                 <legend>Modules</legend>
+                                 <label class="form-label" for="choixModule">Choix du module</label>
+                                 <select class="form-select" aria-label="Default select example" id="choixModule">
+                                    <option selected>Modules</option>
+                                    <option value="1">Module 1 -Révision-</option>
+                                    <option value="2">Module 2 -Optimisation CSS-</option>
+                                    <option value="3">Module 3 -Normes d'accessibilité et de design UX-</option>
+                                    <option value="4">Module 4 -Git en équipe-</option>
+                                    <option value="5">Module 5 -Bibliothèque de développement d'infterfaces adptatives-
+                                    </option>
+                                    <option value="6">Module 6 -Programmation JavaScript-</option>
+                                 </select>
+                              </fieldset>
+                           </div>
+                           <div class="col-lg-6 m-lg-0 p-0">
+                              <fieldset>
+                                 <legend>Catégories</legend>
+                                 <div class="w-50">
+                                    <div class="form-check">
+                                       <input class="form-check-input" type="checkbox" value="" id="HTML"></input>
+                                       <label class="form-check-label" for="HTML">
+                                          HTML
+                                       </label>
+                                    </div>
 
-        <div class="p-0 col-lg-12">
-            <h2>Questionnaire formatif</h2>
-            <h3>Filtres</h3>
-            <div class="accordion accordion-flush" id="accordionFlushExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                        Filtres de recherche
-                    </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">                      
-                            <form action="mailto:thdur001@edu.cegepgarneau.ca" method="post">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <fieldset>
-                                            <legend>Description</legend>
-                                            <div class="input-group">
-                                                <div class="form-outline">
-                                                    <label class="form-label" for="form1">Mot-Clé</label>
-                                                    <input type="search" id="form1" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <legend>Modules</legend>
-                                            <label class="form-label" for="choixModule">Choix du module</label>
-                                            <select class="form-select" aria-label="Default select example" id="choixModule">
-                                                <option selected>Modules</option>
-                                                <option value="1">Module 1 -Révision-</option>
-                                                <option value="2">Module 2 -Optimisation CSS-</option>
-                                                <option value="3">Module 3 -Normes d'accessibilité et de design UX-</option>
-                                                <option value="4">Module 4 -Git en équipe-</option>
-                                                <option value="5">Module 5 -Bibliothèque de développement d'infterfaces adptatives-</option>
-                                                <option value="6">Module 6 -Programmation JavaScript-</option>
-                                            </select>
-                                        </fieldset>
+                                    <div class="form-check">
+                                       <input class="form-check-input" type="checkbox" value="" id="CSS"></input>
+                                       <label class="form-check-label" for="CSS">
+                                          CSS
+                                       </label>
                                     </div>
-                                    <div class="col-lg-6 m-lg-0 p-0">
-                                        <fieldset>
-                                            <legend>Catégories</legend>
-                                            <div class="w-50">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="HTML"></input>
-                                                    <label class="form-check-label" for="HTML">
-                                                        HTML
-                                                    </label>
-                                                </div>
-        
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="CSS"></input>
-                                                    <label class="form-check-label" for="CSS">
-                                                        CSS 
-                                                    </label>
-                                                </div>
-        
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="Bootstrap"></input>
-                                                    <label class="form-check-label" for="Boostrap">
-                                                        Bootstrap
-                                                    </label>
-                                                </div>
-                                            </div>
-        
-                                            <div class="w-50">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="Javascrip"
-                                                        checked></input>
-                                                    <label class="form-check-label" for="Javascrip">
-                                                        Javascrip
-                                                    </label>
-                                                </div>
-        
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="Formulaires"></input>
-                                                    <label class="form-check-label" for="Formulaires">
-                                                        Formulaires
-                                                    </label>
-                                                </div>
-        
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="Autres"
-                                                        checked></input>
-                                                    <label class="form-check-label" for="Autres">
-                                                         ...
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                        <button type="button" class="btn btn-primary" id="filtrer">Filtrer</button>
-                                        <button type="button" class="btn btn-primary" id="toutFiltrer" id>Tout afficher</button>
+
+                                    <div class="form-check">
+                                       <input class="form-check-input" type="checkbox" value="" id="Bootstrap"></input>
+                                       <label class="form-check-label" for="Boostrap">
+                                          Bootstrap
+                                       </label>
                                     </div>
-                                </div>
-                            </form>
+                                 </div>
+
+                                 <div class="w-50">
+                                    <div class="form-check">
+                                       <input class="form-check-input" type="checkbox" value="" id="Javascrip"
+                                          checked></input>
+                                       <label class="form-check-label" for="Javascrip">
+                                          Javascrip
+                                       </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                       <input class="form-check-input" type="checkbox" value=""
+                                          id="Formulaires"></input>
+                                       <label class="form-check-label" for="Formulaires">
+                                          Formulaires
+                                       </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                       <input class="form-check-input" type="checkbox" value="" id="Autres"
+                                          checked></input>
+                                       <label class="form-check-label" for="Autres">
+                                          ...
+                                       </label>
+                                    </div>
+                                 </div>
+                              </fieldset>
+                              <button type="button" class="btn btn-primary" id="filtrer">Filtrer</button>
+                              <button type="button" class="btn btn-primary" id="toutFiltrer" id>Tout afficher</button>
+                           </div>
                         </div>
-                    </div>
-                </div>
+                     </form>
+                  </div>
+               </div>
             </div>
-        </div>
+         </div>
+      </div>
 
-        <div class="bg-primary p-3">
-            <h3>Création du questionnaire</h3>
-            <p>après voir utilisé les filtres, cliquez sur le bouton pour faire les test</p>
-            <p>Si vous ne filtrez pas, le test sera basé sur tous les modules.</p>
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="nbQuestions">Nombre de questions: </span>
-                <input type="text" class="form-control w-25" aria-label="nbQuestions"
-                    aria-describedby="Nombre de questions">
-            </div>
-        </div>     
-        <div id="modules" class="row">
+      <div class="bg-primary p-3">
+         <h3>Création du questionnaire</h3>
+         <p>après voir utilisé les filtres, cliquez sur le bouton pour faire les test</p>
+         <p>Si vous ne filtrez pas, le test sera basé sur tous les modules.</p>
+         <div class="input-group mb-3">
+            <span class="input-group-text" id="nbQuestions">Nombre de questions: </span>
+            <input type="text" class="form-control w-25" aria-label="nbQuestions"
+               aria-describedby="Nombre de questions">
+         </div>
+      </div>
+      <div id="modules" class="row">
 
       </div>
 
