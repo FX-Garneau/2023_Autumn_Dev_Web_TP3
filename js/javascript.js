@@ -4,6 +4,7 @@
 const IDTOASTAFFICHER = "div";
 const TITRETOAST = "Bonne réponse!";
 
+
 /**
  * Fonction qui permet d'initialiser toutes les autres fonctions après que la page soit chargée.
  */
@@ -11,6 +12,8 @@ function initialisation() {
 
    console.log(DATA_QUIZ);
    afficherCards();
+   let banqueQuestion = {};
+   let questionnaire = creerQuestionnaire(document.getElementById("nbQuestion"))
 }
 
 /**Section des fonction à Thierry Durand */
@@ -145,6 +148,21 @@ function filtrerModules(pModule, pDescription, pCategorie) {
       }
    }
    return moduleCorrespondant;
+}
+
+/**Section Maxime */
+
+function creerQuestionnaire(pNBQuestion) {
+   let questionnaire = {};
+
+   for (let index = 0; index < pNBQuestion; index++) {
+      let indiceQuestion = Math.floor(Math.random * banqueQuestion.lenght);
+      questionnaire.add(banqueQuestion[indiceQuestion]);
+      banqueQuestion.splice(indiceQuestion, 1);
+   }
+
+   return questionnaire;
+
 }
 
 addEventListener("load", initialisation, false);
