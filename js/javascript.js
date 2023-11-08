@@ -4,6 +4,7 @@
 // Globals
 const IDTOASTAFFICHER = "div";
 const TITRETOAST = "Bonne réponse!";
+
 /** @type {string[]} */
 var listCategories = [];
 var modules = DATA_QUIZ.modules;
@@ -19,11 +20,12 @@ function initialisation() {
       .filter(c => c != "autres");
 
    afficherCards();
+   let banqueQuestion = {};
+   let questionnaire = creerQuestionnaire(document.getElementById("nbQuestion"))
 
    // Initialize event listeners
    attachEventListeners();
 }
-addEventListener("load", initialisation, false);
 
 /**
  * Fonction qui permet d'attacher les événements aux éléments HTML
@@ -32,9 +34,8 @@ function attachEventListeners() {
    $id("filtrer").addEventListener("click", () => {
       afficherModulesSelonFiltre(true);
    });
+   $id("questionSuivante").addEventListener("click", affichierQuestionSuivante);
 }
-
-/** Section des fonction à Thierry Durand */
 
 /**
  * Fonction qui permet de créer la structure HTML pour afficher une card à
@@ -175,6 +176,117 @@ function filtrerModules(filtrer) {
       );
    console.log(modules);
 }
+
+/**Section Maxime */
+
+function creerQuestionnaire(pNBQuestion) {
+   let questionnaire = {};
+
+   for (let index = 0; index < pNBQuestion; index++) {
+      let indiceQuestion = Math.floor(Math.random * banqueQuestion.lenght);
+      questionnaire.add(banqueQuestion[indiceQuestion]);
+      banqueQuestion.splice(indiceQuestion, 1);
+   }
+
+   return questionnaire;
+
+}
+
+function affichierQuestionSuivante(pNBQuestion) {
+   let question = questionnaire[pNBQuestion];
+   document.getElementById("titreQuestion").textContent = `Question ${pNBQuestion + 1} (Module ${question.modulesId} - ${DATA_QUIZ.modules[question.modulesId].titre})`;
+   document.getElementById("questionPoser").textContent = question.titre;
+
+   let sectionReponse = getElementById("questionReponse")
+   if (question.typeQuestion === "check") {
+      for (const reponse of question.choixReponses) {
+         let nouvelleReponse = document.createElement("div");
+         nouvelleReponse.classList.add("form-check col-12 m-4");
+
+         let inputReponse = document.createElement("input")
+         inputReponse.type = "checkbox";
+         inputReponse.classList.add("form-check-input");
+         inputReponse.id = reponse;
+         inputReponse.name = reponse;
+         inputReponse.value = reponse;
+
+         let labelReponse = document.createElement("label");
+         labelReponse.classList.add("form-check-label");
+         labelReponse.textContent = reponse;
+
+         nouvelleReponse.appendChild(inputReponse);
+         nouvelleReponse.appendChild(labelReponse);
+
+         sectionReponse.appendChild(nouvelleReponse);
+      }
+   }
+   return moduleCorrespondant;
+}
+
+function creerQuestionnaire(pNBQuestion) {
+   let questionnaire = {};
+
+   for (let index = 0; index < pNBQuestion; index++) {
+      let indiceQuestion = Math.floor(Math.random * banqueQuestion.lenght);
+      questionnaire.add(banqueQuestion[indiceQuestion]);
+      banqueQuestion.splice(indiceQuestion, 1);
+   }
+
+   return questionnaire;
+
+}
+
+function affichierQuestionSuivante(pNBQuestion) {
+   let question = questionnaire[pNBQuestion];
+   document.getElementById("titreQuestion").textContent = `Question ${pNBQuestion + 1} (Module ${question.modulesId} - ${DATA_QUIZ.modules[question.modulesId].titre})`;
+   document.getElementById("questionPoser").textContent = question.titre;
+
+   let sectionReponse = getElementById("questionReponse")
+   if (question.typeQuestion === "check") {
+      for (const reponse of question.choixReponses) {
+         let nouvelleReponse = document.createElement("div");
+         nouvelleReponse.classList.add("form-check col-12 m-4");
+
+         let inputReponse = document.createElement("input")
+         inputReponse.type = "checkbox";
+         inputReponse.classList.add("form-check-input");
+         inputReponse.id = reponse;
+         inputReponse.name = reponse;
+         inputReponse.value = reponse;
+
+         let labelReponse = document.createElement("label");
+         labelReponse.classList.add("form-check-label");
+         labelReponse.textContent = reponse;
+
+         nouvelleReponse.appendChild(inputReponse);
+         nouvelleReponse.appendChild(labelReponse);
+
+         sectionReponse.appendChild(nouvelleReponse);
+      }
+   }
+   if (question.typeQuestion === "radio") {
+      let nouvelleReponse = document.createElement("div");
+      nouvelleReponse.classList.add("form-check col-12 m-4");
+
+      let inputReponse = document.createElement("input")
+      inputReponse.type = "radio";
+      inputReponse.classList.add("form-check-input");
+      inputReponse.id = reponse;
+      inputReponse.name = reponse;
+      inputReponse.value = reponse;
+
+      let labelReponse = document.createElement("label");
+      labelReponse.classList.add("form-check-label");
+      labelReponse.textContent = reponse;
+
+      nouvelleReponse.appendChild(inputReponse);
+      nouvelleReponse.appendChild(labelReponse);
+
+      sectionReponse.appendChild(nouvelleReponse);
+   }
+}
+
+
 
 function afficherModulesSelonFiltre(filtrer) {
    filtrerModules(filtrer);
