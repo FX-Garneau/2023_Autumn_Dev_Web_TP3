@@ -48,8 +48,8 @@
                                  <legend>Description</legend>
                                  <div class="input-group">
                                     <div class="form-outline">
-                                       <label class="form-label" for="form1">Mot-Clé</label>
-                                       <input type="search" id="form1" class="form-control" />
+                                       <label class="form-label" for="motcle">Mot-Clé</label>
+                                       <input type="search" id="motcle" class="form-control" />
                                     </div>
                                  </div>
                               </fieldset>
@@ -58,36 +58,39 @@
                                  <label class="form-label" for="choixModule">Choix du module</label>
                                  <select class="form-select" aria-label="Default select example" id="choixModule">
                                     <option selected>Modules</option>
-                                    <option value="1">Module 1 -Révision-</option>
-                                    <option value="2">Module 2 -Optimisation CSS-</option>
-                                    <option value="3">Module 3 -Normes d'accessibilité et de design UX-</option>
-                                    <option value="4">Module 4 -Git en équipe-</option>
-                                    <option value="5">Module 5 -Bibliothèque de développement d'infterfaces adptatives-
+                                    <option value="Révision">Module 1 -Révision-</option>
+                                    <option value="Optimisation CSS">Module 2 -Optimisation CSS-</option>
+                                    <option value="Normes d'accessibilité et de design UX">Module 3 -Normes
+                                       d'accessibilité et de design UX-</option>
+                                    <option value="Git en équipe">Module 4 -Git en équipe-</option>
+                                    <option value="Bibliothèque de développement d'infterfaces adptatives">Module 5
+                                       -Bibliothèque de développement d'infterfaces adptatives-</option>
+                                    <option value="Programmation JavaScript">Module 6 -Programmation JavaScript-
                                     </option>
-                                    <option value="6">Module 6 -Programmation JavaScript-</option>
                                  </select>
                               </fieldset>
                            </div>
                            <div class="col-lg-6 m-lg-0 p-0">
-                              <fieldset>
+                              <fieldset id="categories">
                                  <legend>Catégories</legend>
                                  <div class="w-50">
                                     <div class="form-check">
-                                       <input class="form-check-input" type="checkbox" value="" id="HTML"></input>
+                                       <input class="form-check-input" type="checkbox" value="HTML" id="HTML"></input>
                                        <label class="form-check-label" for="HTML">
                                           HTML
                                        </label>
                                     </div>
 
                                     <div class="form-check">
-                                       <input class="form-check-input" type="checkbox" value="" id="CSS"></input>
+                                       <input class="form-check-input" type="checkbox" value="CSS" id="CSS"></input>
                                        <label class="form-check-label" for="CSS">
                                           CSS
                                        </label>
                                     </div>
 
                                     <div class="form-check">
-                                       <input class="form-check-input" type="checkbox" value="" id="Bootstrap"></input>
+                                       <input class="form-check-input" type="checkbox" value="Bootstrap"
+                                          id="Bootstrap"></input>
                                        <label class="form-check-label" for="Boostrap">
                                           Bootstrap
                                        </label>
@@ -96,15 +99,15 @@
 
                                  <div class="w-50">
                                     <div class="form-check">
-                                       <input class="form-check-input" type="checkbox" value="" id="Javascrip"
-                                          checked></input>
-                                       <label class="form-check-label" for="Javascrip">
-                                          Javascrip
+                                       <input class="form-check-input" type="checkbox" value="Javascript"
+                                          id="Javascript" checked></input>
+                                       <label class="form-check-label" for="Javascript">
+                                          Javascript
                                        </label>
                                     </div>
 
                                     <div class="form-check">
-                                       <input class="form-check-input" type="checkbox" value=""
+                                       <input class="form-check-input" type="checkbox" value="Formulaires"
                                           id="Formulaires"></input>
                                        <label class="form-check-label" for="Formulaires">
                                           Formulaires
@@ -112,7 +115,7 @@
                                     </div>
 
                                     <div class="form-check">
-                                       <input class="form-check-input" type="checkbox" value="" id="Autres"
+                                       <input class="form-check-input" type="checkbox" value="Autres" id="Autres"
                                           checked></input>
                                        <label class="form-check-label" for="Autres">
                                           ...

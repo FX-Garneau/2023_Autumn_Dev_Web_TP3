@@ -1,23 +1,44 @@
 /* eslint-disable no-undef */
 "use strict";
 
+// Globals
 const IDTOASTAFFICHER = "div";
 const TITRETOAST = "Bonne réponse!";
+/** @type {string[]} */
+var listCategories = [];
+var modules = DATA_QUIZ.modules;
 
 /**
  * Fonction qui permet d'initialiser toutes les autres fonctions après que la page soit chargée.
  */
 function initialisation() {
 
-   console.log(DATA_QUIZ);
+   // obtenir liste des categories (NE PAS SUPRIMER)
+   listCategories = $all("#categories input")
+      .map(opt => opt.value?.toLowerCase())
+      .filter(c => c != "autres");
+
    afficherCards();
+
+   // Initialize event listeners
+   attachEventListeners();
+}
+addEventListener("load", initialisation, false);
+
+/**
+ * Fonction qui permet d'attacher les événements aux éléments HTML
+ */
+function attachEventListeners() {
+   $id("filtrer").addEventListener("click", () => {
+      afficherModulesSelonFiltre(true);
+   });
 }
 
-/**Section des fonction à Thierry Durand */
+/** Section des fonction à Thierry Durand */
 
 /**
  * Fonction qui permet de créer la structure HTML pour afficher une card à
-partir des paramètres pour personnaliser l’image, le titre et la description.
+ * partir des paramètres pour personnaliser l’image, le titre et la description.
  * @param {*} pImage Image à insérer dans le haut de la cards
  * @param {*} pTitre Titre de la cards
  * @param {*} pDescription Description de la cards
@@ -128,23 +149,34 @@ function afficherRetroaction(pEstRetroToasts, idToast) {
    }
 }
 
-
 /**
- * Trouver un module correspondant aux critères de recherche 
- * @param {*} pModule Nom du module choisi
- * @param {*} pDescription Eléments de description choisis
- * @param {*} pCategorie Catégorie choisie
+ * Trouver un module correspondant aux critères de recherche
+ * @author Ulric Huot
  */
-function filtrerModules(pModule, pDescription, pCategorie) {
-   let moduleCorrespondant;
-
-   for (let module of DATA_QUIZ.modules) {
-      if (module.description.includes(pDescription) || module.titre == pModule || module.categories.includes(pCategorie)) {
-         moduleCorrespondant = module;
-         break;
-      }
-   }
-   return moduleCorrespondant;
+function filtrerModules(filtrer) {
+   let module = $id("choixModule").selectedOptions[0].value?.toLowerCase();
+   let keyword = $id("motcle").value?.toLowerCase();
+   let categories = $all("#categories input:checked").map(opt => opt.value?.toLowerCase());
+   modules = !filtrer
+      ? DATA_QUIZ.modules
+      : DATA_QUIZ.modules.filter((m, i) =>
+         module == m.titre.toLowerCase() ||
+         keyword && m.description.toLowerCase().includes(keyword) ||
+         Array.from(new Set(
+            DATA_QUIZ.banque_questions.filter(q =>
+               q.categories.some(c =>
+                  categories.includes(c.toLowerCase()) || (
+                     categories.includes("autres") &&
+                     !q.categories.some(qc => listCategories.includes(qc.toLowerCase()))
+                  )
+               )
+            ).map(q => q.modulesId)
+         )).includes(i)
+      );
+   console.log(modules);
 }
 
-addEventListener("load", initialisation, false);
+function afficherModulesSelonFiltre(filtrer) {
+   filtrerModules(filtrer);
+   // ...
+}

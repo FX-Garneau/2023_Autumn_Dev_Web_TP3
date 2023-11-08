@@ -2,8 +2,8 @@
 
 /** @type {(id: string) => HTMLElement} */
 const $id = document.getElementById.bind(document);
-/** @type {<K extends keyof HTMLElementTagNameMap>(selectors: K) => NodeListOf<HTMLElementTagNameMap[K]>} */
-const $all = document.querySelectorAll.bind(document);
+/** @type {(selectors: string) => Array<HTMLElement>} */
+const $all = (selectors) => Array.from(document.querySelectorAll.bind(document)(selectors));
 /** @type {(tagName: string, options?: ElementCreationOptions) => HTMLElement} */
 const $new = document.createElement.bind(document);
 
