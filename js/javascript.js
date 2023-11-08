@@ -151,8 +151,9 @@ function afficherRetroaction(pEstRetroToasts, idToast) {
 }
 
 /**
- * Trouver un module correspondant aux critères de recherche
+ * Filtre les modules selon les critères de recherche
  * @author Ulric Huot
+ * @param {boolean} filtrer Si l'on doit filtrer les modules ou non
  */
 function filtrerModules(filtrer) {
    let module = $id("choixModule").selectedOptions[0].value?.toLowerCase();
@@ -177,7 +178,16 @@ function filtrerModules(filtrer) {
    console.log(modules);
 }
 
-/**Section Maxime */
+/**
+ * Les modules correspondants aux filtres dans la page HTML
+ * @author Ulric Huot
+ * @param {boolean} filtrer Si l'on doit filtrer les modules ou non
+ */
+function afficherModulesSelonFiltre(filtrer) {
+   filtrerModules(filtrer);
+   // ...
+}
+
 
 function creerQuestionnaire(pNBQuestion) {
    let questionnaire = {};
@@ -284,11 +294,4 @@ function affichierQuestionSuivante(pNBQuestion) {
 
       sectionReponse.appendChild(nouvelleReponse);
    }
-}
-
-
-
-function afficherModulesSelonFiltre(filtrer) {
-   filtrerModules(filtrer);
-   // ...
 }
