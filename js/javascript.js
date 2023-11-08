@@ -13,6 +13,8 @@ var modules = DATA_QUIZ.modules;
  * Fonction qui permet d'initialiser toutes les autres fonctions après que la page soit chargée.
  */
 function initialisation() {
+   // Initialize event listeners
+   attachEventListeners();
 
    // obtenir liste des categories (NE PAS SUPRIMER)
    listCategories = $all("#categories input")
@@ -20,20 +22,19 @@ function initialisation() {
       .filter(c => c != "autres");
 
    afficherCards();
+
    let banqueQuestion = {};
    let questionnaire = creerQuestionnaire(document.getElementById("nbQuestion"))
 
-   // Initialize event listeners
-   attachEventListeners();
 }
+addEventListener("load", initialisation);
 
 /**
  * Fonction qui permet d'attacher les événements aux éléments HTML
  */
 function attachEventListeners() {
-   $id("filtrer").addEventListener("click", () => {
-      afficherModulesSelonFiltre(true);
-   });
+   $id("filtrer").addEventListener("click", () => { afficherModulesSelonFiltre(true); });
+   $id("afficherTout").addEventListener("click", () => { afficherModulesSelonFiltre(false); });
    $id("questionSuivante").addEventListener("click", affichierQuestionSuivante);
 }
 
@@ -83,7 +84,10 @@ function creerCards(pImage, pTitre, pDescription) {
  * Fonction qui permet d'afficher les cards à partir de la fonction creerCards
  */
 function afficherCards() {
-   for (let module of DATA_QUIZ.modules) {
+
+   $id("modules").innerHTML = ""; /** @author Ulric Huot */
+
+   for (let module of modules) {
       let cheminImage = "/images/modules/" + module.imgModule;
       let titreImage = module.titre;
       let descriptionImage = module.description;
@@ -185,7 +189,7 @@ function filtrerModules(filtrer) {
  */
 function afficherModulesSelonFiltre(filtrer) {
    filtrerModules(filtrer);
-   // ...
+   afficherCards();
 }
 
 
