@@ -9,6 +9,7 @@ const TITRETOAST = "Bonne réponse!";
 var listCategories = [];
 var modules = DATA_QUIZ.modules;
 let questionnaire = [];
+let numeroQuestion = 0;
 
 /**
  * Fonction qui permet d'initialiser toutes les autres fonctions après que la page soit chargée.
@@ -35,7 +36,7 @@ addEventListener("load", initialisation);
 function attachEventListeners() {
    $id("filtrer").addEventListener("click", () => { afficherModulesSelonFiltre(true); });
    $id("afficherTout").addEventListener("click", () => { afficherModulesSelonFiltre(false); });
-   $id("questionSuivante").addEventListener("click", affichierQuestionSuivante);
+   $id("questionSuivante").addEventListener("click", afficherQuestionSuivante);
    $id("creationQuestionnaire").addEventListener("click", () => { creerQuestionnaire(); });
 }
 
@@ -214,10 +215,11 @@ function creerQuestionnaire() {
    let elementNbQuestion = document.getElementById("nbQuestions");
    let nbQuestions = elementNbQuestion.value;
 
-   // if (nbQuestions > banqueQuestion.length()) {
-   //    nbQuestions = banqueQuestion.length();
-   //    //Ajouter popup de cahngement du nb de question
-   // }
+   if (nbQuestions > banqueQuestion.length) {
+      nbQuestions = banqueQuestion.length;
+      elementNbQuestion.value = banqueQuestion.length;
+      //Ajouter popup de cahngement du nb de question
+   }
 
    for (let index = 0; index < nbQuestions; index++) {
       let indiceQuestion = Math.floor(Math.random() * banqueQuestion.length);
@@ -226,86 +228,52 @@ function creerQuestionnaire() {
    }
 
    console.log(questionnaire);
+
+   afficherQuestionSuivante(numeroQuestion);
 }
 
-function affichierQuestionSuivante(pNBQuestion) {
-   let question = questionnaire[pNBQuestion];
-   document.getElementById("titreQuestion").textContent = `Question ${pNBQuestion + 1} (Module ${question.modulesId} - ${DATA_QUIZ.modules[question.modulesId].titre})`;
+function afficherQuestionSuivante(pNumeroQuestion) {
+   let question = questionnaire[pNumeroQuestion];
+   document.getElementById("titreQuestion").textContent = `Question ${pNumeroQuestion + 1} (Module ${question.modulesId} - ${modules[question.modulesId].titre})`;
    document.getElementById("questionPoser").textContent = question.titre;
 
-   let sectionReponse = getElementById("questionReponse")
-   if (question.typeQuestion === "check") {
-      for (const reponse of question.choixReponses) {
-         let nouvelleReponse = document.createElement("div");
-         nouvelleReponse.classList.add("form-check col-12 m-4");
+   let sectionReponse = document.getElementById("questionReponse");
+   sectionReponse.innerHTML = '';
 
-         let inputReponse = document.createElement("input")
-         inputReponse.type = "checkbox";
-         inputReponse.classList.add("form-check-input");
-         inputReponse.id = reponse;
-         inputReponse.name = reponse;
-         inputReponse.value = reponse;
+   for (const reponse of question.choixReponses) {
 
-         let labelReponse = document.createElement("label");
-         labelReponse.classList.add("form-check-label");
-         labelReponse.textContent = reponse;
-
-         nouvelleReponse.appendChild(inputReponse);
-         nouvelleReponse.appendChild(labelReponse);
-
-         sectionReponse.appendChild(nouvelleReponse);
-      }
-   }
-   return moduleCorrespondant;
-}
-
-function affichierQuestionSuivante(pNBQuestion) {
-   let question = questionnaire[pNBQuestion];
-   document.getElementById("titreQuestion").textContent = `Question ${pNBQuestion + 1} (Module ${question.modulesId} - ${DATA_QUIZ.modules[question.modulesId].titre})`;
-   document.getElementById("questionPoser").textContent = question.titre;
-
-   let sectionReponse = getElementById("questionReponse")
-   if (question.typeQuestion === "check") {
-      for (const reponse of question.choixReponses) {
-         let nouvelleReponse = document.createElement("div");
-         nouvelleReponse.classList.add("form-check col-12 m-4");
-
-         let inputReponse = document.createElement("input")
-         inputReponse.type = "checkbox";
-         inputReponse.classList.add("form-check-input");
-         inputReponse.id = reponse;
-         inputReponse.name = reponse;
-         inputReponse.value = reponse;
-
-         let labelReponse = document.createElement("label");
-         labelReponse.classList.add("form-check-label");
-         labelReponse.textContent = reponse;
-
-         nouvelleReponse.appendChild(inputReponse);
-         nouvelleReponse.appendChild(labelReponse);
-
-         sectionReponse.appendChild(nouvelleReponse);
-      }
-   }
-   if (question.typeQuestion === "radio") {
       let nouvelleReponse = document.createElement("div");
-      nouvelleReponse.classList.add("form-check col-12 m-4");
-
-      let inputReponse = document.createElement("input")
-      inputReponse.type = "radio";
-      inputReponse.classList.add("form-check-input");
-      inputReponse.id = reponse;
-      inputReponse.name = reponse;
-      inputReponse.value = reponse;
-
-      let labelReponse = document.createElement("label");
-      labelReponse.classList.add("form-check-label");
-      labelReponse.textContent = reponse;
-
-      nouvelleReponse.appendChild(inputReponse);
-      nouvelleReponse.appendChild(labelReponse);
-
+      nouvelleReponse.className = "form-check col-12 m-4";
       sectionReponse.appendChild(nouvelleReponse);
+
+      if (question.typeQuestion == "check") {
+         let inputReponse = document.createElement("input");
+         inputReponse.type = "checkbox";
+         inputReponse.className = "form-check-input";
+         inputReponse.id = reponse;
+         inputReponse.name = reponse;
+         inputReponse.value = reponse;
+         nouvelleReponse.appendChild(inputReponse);
+
+         let labelReponse = document.createElement("label");
+         labelReponse.className = "form-check-label";
+         labelReponse.textContent = reponse;
+         nouvelleReponse.appendChild(labelReponse);
+      }
+      if (question.typeQuestion === "radio") {
+         let inputReponse = document.createElement("input");
+         inputReponse.type = "radio";
+         inputReponse.className = "form-check-input";
+         inputReponse.id = reponse;
+         inputReponse.name = reponse;
+         inputReponse.value = reponse;
+         nouvelleReponse.appendChild(inputReponse);
+
+         let labelReponse = document.createElement("label");
+         labelReponse.className = "form-check-label";
+         labelReponse.textContent = reponse;
+         nouvelleReponse.appendChild(labelReponse);
+      }
    }
 }
 
