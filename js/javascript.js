@@ -8,13 +8,14 @@ const TITRETOAST = "Bonne réponse!";
 /** @type {string[]} */
 var listCategories = [];
 var modules = DATA_QUIZ.modules;
+let questionnaire = [];
 
 /**
  * Fonction qui permet d'initialiser toutes les autres fonctions après que la page soit chargée.
  */
 function initialisation() {
    // Ajoute un id au modules;
-   ajouterModuleID();
+   ajouterModulesID();
 
    // Initialize event listeners
    attachEventListeners();
@@ -25,10 +26,6 @@ function initialisation() {
       .filter(c => c != "autres");
 
    afficherCards();
-
-   let banqueQuestion = {};
-   let questionnaire = creerQuestionnaire(document.getElementById("nbQuestion"))
-
 }
 addEventListener("load", initialisation);
 
@@ -39,6 +36,7 @@ function attachEventListeners() {
    $id("filtrer").addEventListener("click", () => { afficherModulesSelonFiltre(true); });
    $id("afficherTout").addEventListener("click", () => { afficherModulesSelonFiltre(false); });
    $id("questionSuivante").addEventListener("click", affichierQuestionSuivante);
+   $id("creationQuestionnaire").addEventListener("click", () => { creerQuestionnaire(); });
 }
 
 /**
@@ -196,17 +194,38 @@ function afficherModulesSelonFiltre(filtrer) {
 }
 
 
-function creerQuestionnaire(pNBQuestion) {
-   let questionnaire = {};
+function creerQuestionnaire() {
 
-   for (let index = 0; index < pNBQuestion; index++) {
-      let indiceQuestion = Math.floor(Math.random * banqueQuestion.lenght);
-      questionnaire.add(banqueQuestion[indiceQuestion]);
+   let banqueQuestion = [];
+
+   questionnaire = [];
+
+   for (let module of modules) {
+      for (let question of DATA_QUIZ.banque_questions) {
+         if (module.modulesId == question.modulesId) {
+            banqueQuestion.push(question);
+         }
+      }
+   }
+
+   console.log(banqueQuestion);
+
+
+   let elementNbQuestion = document.getElementById("nbQuestions");
+   let nbQuestions = elementNbQuestion.value;
+
+   // if (nbQuestions > banqueQuestion.length()) {
+   //    nbQuestions = banqueQuestion.length();
+   //    //Ajouter popup de cahngement du nb de question
+   // }
+
+   for (let index = 0; index < nbQuestions; index++) {
+      let indiceQuestion = Math.floor(Math.random() * banqueQuestion.length);
+      questionnaire.push(banqueQuestion[indiceQuestion]);
       banqueQuestion.splice(indiceQuestion, 1);
    }
 
-   return questionnaire;
-
+   console.log(questionnaire);
 }
 
 function affichierQuestionSuivante(pNBQuestion) {
@@ -238,19 +257,6 @@ function affichierQuestionSuivante(pNBQuestion) {
       }
    }
    return moduleCorrespondant;
-}
-
-function creerQuestionnaire(pNBQuestion) {
-   let questionnaire = {};
-
-   for (let index = 0; index < pNBQuestion; index++) {
-      let indiceQuestion = Math.floor(Math.random * banqueQuestion.lenght);
-      questionnaire.add(banqueQuestion[indiceQuestion]);
-      banqueQuestion.splice(indiceQuestion, 1);
-   }
-
-   return questionnaire;
-
 }
 
 function affichierQuestionSuivante(pNBQuestion) {
@@ -303,10 +309,10 @@ function affichierQuestionSuivante(pNBQuestion) {
    }
 }
 
-function ajouterModuleID() {
+function ajouterModulesID() {
    let i = 0;
    for (let module of modules) {
-      module.moduleid = i;
+      module.modulesId = i;
       i++;
    }
 }
