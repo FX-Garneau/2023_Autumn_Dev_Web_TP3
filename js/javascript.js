@@ -13,6 +13,9 @@ var modules = DATA_QUIZ.modules;
  * Fonction qui permet d'initialiser toutes les autres fonctions après que la page soit chargée.
  */
 function initialisation() {
+   // Ajoute un id au modules;
+   ajouterModuleID();
+
    // Initialize event listeners
    attachEventListeners();
 
@@ -297,5 +300,13 @@ function affichierQuestionSuivante(pNBQuestion) {
       nouvelleReponse.appendChild(labelReponse);
 
       sectionReponse.appendChild(nouvelleReponse);
+   }
+}
+
+function ajouterModuleID() {
+   let i = 0;
+   for (let module of modules) {
+      module.moduleid = i;
+      i++;
    }
 }
