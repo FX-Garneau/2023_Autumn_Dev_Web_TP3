@@ -36,7 +36,6 @@ addEventListener("load", initialisation);
 function attachEventListeners() {
    $id("filtrer").addEventListener("click", () => { afficherModulesSelonFiltre(true); });
    $id("afficherTout").addEventListener("click", () => { afficherModulesSelonFiltre(false); });
-   $id("questionSuivante").addEventListener("click", afficherQuestionSuivante);
    $id("creationQuestionnaire").addEventListener("click", () => { creerQuestionnaire(); });
    $id("questionSuivante").addEventListener("click", () => { validerReponse(numeroQuestion); });
 
@@ -212,14 +211,13 @@ function creerQuestionnaire() {
 
    console.log(banqueQuestion);
 
-
    let elementNbQuestion = document.getElementById("nbQuestions");
    let nbQuestions = elementNbQuestion.value;
 
    if (nbQuestions > banqueQuestion.length) {
       nbQuestions = banqueQuestion.length;
       elementNbQuestion.value = banqueQuestion.length;
-      //Ajouter popup de cahngement du nb de question
+      //Ajouter popup de changement du nb de question
    }
 
    for (let index = 0; index < nbQuestions; index++) {
@@ -241,7 +239,7 @@ function afficherQuestionSuivante(pNumeroQuestion) {
    }
    else {
       let question = questionnaire[pNumeroQuestion];
-      document.getElementById("titreQuestion").textContent = `Question ${pNumeroQuestion + 1} (Module ${question.modulesId} - ${modules[question.modulesId].titre})`;
+      document.getElementById("titreQuestion").textContent = `Question ${pNumeroQuestion + 1} (Module ${question.modulesId} - ${DATA_QUIZ.modules[question.modulesId].titre})`;
       document.getElementById("questionPoser").textContent = question.titre;
 
       let sectionReponse = document.getElementById("questionReponse");
