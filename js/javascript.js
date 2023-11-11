@@ -32,6 +32,7 @@ addEventListener("load", initialisation);
 
 /**
  * Fonction qui permet d'attacher les événements aux éléments HTML
+ * @author Ulric Huot, Maxime Foisy
  */
 function attachEventListeners() {
    $id("filtrer").addEventListener("click", () => { afficherModulesSelonFiltre(true); });
@@ -195,6 +196,10 @@ function afficherModulesSelonFiltre(filtrer) {
    afficherCards();
 }
 
+/**
+ * Créer le questionnaire selon les modules filtrer
+ * @author Maxime Foisy
+ */
 function creerQuestionnaire() {
 
    let banqueQuestion = [];
@@ -233,9 +238,14 @@ function creerQuestionnaire() {
    afficherQuestionSuivante(numeroQuestion);
 }
 
+/**
+ * Affiche dans la zone de question HTML la question se trouvant à l'indice passer en paramètre
+ * @author Maxime Foisy
+ * @param {int} pNumeroQuestion Indice de la question à afficher
+ */
 function afficherQuestionSuivante(pNumeroQuestion) {
    if (pNumeroQuestion > questionnaire.length) {
-      //Terminer questionnaire
+      terminerQuestionnaire();
    }
    else {
       let question = questionnaire[pNumeroQuestion];
@@ -286,6 +296,11 @@ function afficherQuestionSuivante(pNumeroQuestion) {
    }
 }
 
+/**
+ * Vérifie les réponses entrées dans le questionnaire et ajoute un score ainsi qu'une mention réussi ou non à la question du questionnaire
+ * @author Maxime Foisy
+ * @param {int} pNumeroQuestion Indice de la question qui est afficher présentement
+ */
 function validerReponse(pNumeroQuestion) {
    let reponseHTML = document.querySelectorAll(".reponse");
    let question = questionnaire[pNumeroQuestion];
@@ -306,6 +321,20 @@ function validerReponse(pNumeroQuestion) {
 
 }
 
+/**
+ * Change l'état des boutons et donne un popover que le questionnaire est terminé
+ */
+function terminerQuestionnaire() {
+   document.getElementById("btnMesReponse").disabled = false;
+   document.getElementById("questionSuivante").disabled = true;
+
+   //fonction creerPopover
+}
+
+/**
+ * Ajoute un ID au modules
+ * @author Maxime Foisy
+ */
 function ajouterModulesID() {
    let i = 0;
    for (let module of modules) {
