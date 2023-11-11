@@ -38,6 +38,8 @@ function attachEventListeners() {
    $id("afficherTout").addEventListener("click", () => { afficherModulesSelonFiltre(false); });
    $id("questionSuivante").addEventListener("click", afficherQuestionSuivante);
    $id("creationQuestionnaire").addEventListener("click", () => { creerQuestionnaire(); });
+   $id("questionSuivante").addEventListener("click", () => { validerReponse(numeroQuestion); });
+
 }
 
 /**
@@ -194,7 +196,6 @@ function afficherModulesSelonFiltre(filtrer) {
    afficherCards();
 }
 
-
 function creerQuestionnaire() {
 
    let banqueQuestion = [];
@@ -224,6 +225,8 @@ function creerQuestionnaire() {
    for (let index = 0; index < nbQuestions; index++) {
       let indiceQuestion = Math.floor(Math.random() * banqueQuestion.length);
       questionnaire.push(banqueQuestion[indiceQuestion]);
+      questionnaire[index].score = 0;
+      questionnaire[index].reussi = false;
       banqueQuestion.splice(indiceQuestion, 1);
    }
 
@@ -233,48 +236,76 @@ function creerQuestionnaire() {
 }
 
 function afficherQuestionSuivante(pNumeroQuestion) {
-   let question = questionnaire[pNumeroQuestion];
-   document.getElementById("titreQuestion").textContent = `Question ${pNumeroQuestion + 1} (Module ${question.modulesId} - ${modules[question.modulesId].titre})`;
-   document.getElementById("questionPoser").textContent = question.titre;
+   if (pNumeroQuestion > questionnaire.length) {
+      //Terminer questionnaire
+   }
+   else {
+      let question = questionnaire[pNumeroQuestion];
+      document.getElementById("titreQuestion").textContent = `Question ${pNumeroQuestion + 1} (Module ${question.modulesId} - ${modules[question.modulesId].titre})`;
+      document.getElementById("questionPoser").textContent = question.titre;
 
-   let sectionReponse = document.getElementById("questionReponse");
-   sectionReponse.innerHTML = '';
+      let sectionReponse = document.getElementById("questionReponse");
+      sectionReponse.innerHTML = '';
 
-   for (const reponse of question.choixReponses) {
+      for (const reponse of question.choixReponses) {
+         let i = 0;
 
-      let nouvelleReponse = document.createElement("div");
-      nouvelleReponse.className = "form-check col-12 m-4";
-      sectionReponse.appendChild(nouvelleReponse);
+         let nouvelleReponse = document.createElement("div");
+         nouvelleReponse.className = "form-check col-12 m-4";
+         sectionReponse.appendChild(nouvelleReponse);
 
-      if (question.typeQuestion == "check") {
-         let inputReponse = document.createElement("input");
-         inputReponse.type = "checkbox";
-         inputReponse.className = "form-check-input";
-         inputReponse.id = reponse;
-         inputReponse.name = reponse;
-         inputReponse.value = reponse;
-         nouvelleReponse.appendChild(inputReponse);
+         if (question.typeQuestion == "check") {
+            let inputReponse = document.createElement("input");
+            inputReponse.type = "checkbox";
+            inputReponse.className = "form-check-input reponse";
+            inputReponse.id = reponse;
+            inputReponse.name = reponse;
+            inputReponse.value = i;
+            nouvelleReponse.appendChild(inputReponse);
 
-         let labelReponse = document.createElement("label");
-         labelReponse.className = "form-check-label";
-         labelReponse.textContent = reponse;
-         nouvelleReponse.appendChild(labelReponse);
-      }
-      if (question.typeQuestion === "radio") {
-         let inputReponse = document.createElement("input");
-         inputReponse.type = "radio";
-         inputReponse.className = "form-check-input";
-         inputReponse.id = reponse;
-         inputReponse.name = reponse;
-         inputReponse.value = reponse;
-         nouvelleReponse.appendChild(inputReponse);
+            let labelReponse = document.createElement("label");
+            labelReponse.className = "form-check-label";
+            labelReponse.textContent = reponse;
+            nouvelleReponse.appendChild(labelReponse);
+         }
+         if (question.typeQuestion === "radio") {
+            let inputReponse = document.createElement("input");
+            inputReponse.type = "radio";
+            inputReponse.className = "form-check-input reponse";
+            inputReponse.id = reponse;
+            inputReponse.name = "reponse";
+            inputReponse.value = i;
+            nouvelleReponse.appendChild(inputReponse);
 
-         let labelReponse = document.createElement("label");
-         labelReponse.className = "form-check-label";
-         labelReponse.textContent = reponse;
-         nouvelleReponse.appendChild(labelReponse);
+            let labelReponse = document.createElement("label");
+            labelReponse.className = "form-check-label";
+            labelReponse.textContent = reponse;
+            nouvelleReponse.appendChild(labelReponse);
+         }
+
+         i++;
       }
    }
+}
+
+function validerReponse(pNumeroQuestion) {
+   let reponseHTML = document.querySelectorAll(".reponse");
+   let question = questionnaire[pNumeroQuestion];
+
+   for (let index = 0; index < reponseHTML.length; index++) {
+      const reponse = reponseHTML[index];
+      if (reponse.checked && index in question.reponses) {
+         questionnaire[pNumeroQuestion].score++;
+      }
+   }
+
+   if (questionnaire[pNumeroQuestion].score == question.reponses.length) {
+      questionnaire[pNumeroQuestion].reussi = true;
+   }
+
+   numeroQuestion++;
+   afficherQuestionSuivante(numeroQuestion);
+
 }
 
 function ajouterModulesID() {
