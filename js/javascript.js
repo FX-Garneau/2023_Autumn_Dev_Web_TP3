@@ -203,6 +203,8 @@ function afficherModulesSelonFiltre(filtrer) {
  */
 function creerQuestionnaire() {
 
+   document.getElementById("creationQuestionnaire").disabled = true;
+
    let banqueQuestion = [];
 
    questionnaire = [];
@@ -222,8 +224,14 @@ function creerQuestionnaire() {
 
    if (nbQuestions > banqueQuestion.length) {
       nbQuestions = banqueQuestion.length;
-      elementNbQuestion.value = banqueQuestion.length;
-      //Ajouter popup de changement du nb de question
+   }
+   if (nbQuestions < 1) {
+      nbQuestions = 1;
+      elementNbQuestion.value = 1;
+   }
+   if (nbQuestions > 5) {
+      nbQuestions = 5;
+      elementNbQuestion.value = 5;
    }
 
    for (let index = 0; index < nbQuestions; index++) {
