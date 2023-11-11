@@ -163,9 +163,14 @@
                   <div id="questionReponse" class="row">
                   </div>
                   <div class="row">
-                     <button type="button" id="questionSuivante" class="btn btn-dark col-6 w-auto m-2">Valider et passer
-                        à la question
-                        suivante</button>
+                     <button type="button" id="questionSuivante" class="btn btn-dark col-6 w-auto m-2"
+                        data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="top">
+                        Valider et passer à la question suivante
+                     </button>
+                     <div id="contenu-popover-reponse" class="d-none">
+                        <p>Pour consulter vos réponse, clicker sur le bouton "<a href="#btnMesReponse">Mes réponses</a>"
+                           dans l'entête de cette page</p>
+                     </div>
                   </div>
                </fieldset>
             </form>

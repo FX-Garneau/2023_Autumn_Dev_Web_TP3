@@ -27,6 +27,7 @@ function initialisation() {
       .filter(c => c != "autres");
 
    afficherCards();
+
 }
 addEventListener("load", initialisation);
 
@@ -244,7 +245,10 @@ function creerQuestionnaire() {
  * @param {int} pNumeroQuestion Indice de la question à afficher
  */
 function afficherQuestionSuivante(pNumeroQuestion) {
-   if (pNumeroQuestion > questionnaire.length) {
+   if (pNumeroQuestion == questionnaire.length - 1) {
+      creerPoppover('contenu-popover-reponse', 'questionSuivante', 'Questionnaire terminé');
+   }
+   if (pNumeroQuestion >= questionnaire.length) {
       terminerQuestionnaire();
    }
    else {
@@ -302,23 +306,28 @@ function afficherQuestionSuivante(pNumeroQuestion) {
  * @param {int} pNumeroQuestion Indice de la question qui est afficher présentement
  */
 function validerReponse(pNumeroQuestion) {
-   let reponseHTML = document.querySelectorAll(".reponse");
-   let question = questionnaire[pNumeroQuestion];
+   if (pNumeroQuestion < questionnaire.length) {
+      let reponseHTML = document.querySelectorAll(".reponse");
+      let question = questionnaire[pNumeroQuestion];
 
-   for (let index = 0; index < reponseHTML.length; index++) {
-      const reponse = reponseHTML[index];
-      if (reponse.checked && index in question.reponses) {
-         questionnaire[pNumeroQuestion].score++;
+      for (let index = 0; index < reponseHTML.length; index++) {
+         const reponse = reponseHTML[index];
+         if (reponse.checked && index in question.reponses) {
+            questionnaire[pNumeroQuestion].score++;
+         }
       }
+
+      if (questionnaire[pNumeroQuestion].score == question.reponses.length) {
+         questionnaire[pNumeroQuestion].reussi = true;
+      }
+      else {
+
+      }
+
+      numeroQuestion++;
    }
 
-   if (questionnaire[pNumeroQuestion].score == question.reponses.length) {
-      questionnaire[pNumeroQuestion].reussi = true;
-   }
-
-   numeroQuestion++;
    afficherQuestionSuivante(numeroQuestion);
-
 }
 
 /**
@@ -326,9 +335,6 @@ function validerReponse(pNumeroQuestion) {
  */
 function terminerQuestionnaire() {
    document.getElementById("btnMesReponse").disabled = false;
-   document.getElementById("questionSuivante").disabled = true;
-
-   //fonction creerPopover
 }
 
 /**
@@ -343,6 +349,34 @@ function calculerScore() {
    }
 
    return score;
+}
+
+/**
+ * Affiche un popover sur un bouton passé en paramêtre
+ * @author Maxime Foisy
+ * @param {string} pIdContenuPopover Id de la div qui contient le contenu a afficher dans le popover
+ * @param {string} pIdBoutonAssocie Id du bouton où le popover doit être afficher
+ * @param {string} pEntete Titre du popover
+ */
+function creerPoppover(pIdContenuPopover, pIdBoutonAssocie, pEntete) {
+
+   /* Ne pas oublier de mettre les configurations sur le bouton dans le HTML:
+      data-bs-toggle="popover" --Indique un popover
+      data-bs-trigger="focus" --Enlève le popover quand il perd le focus
+      data-bs-placement="top/bottom/left/right") --Emplacement du popover par rapport au bouton
+   */
+
+   let optionsPopover = {
+      container: 'body',
+      title: pEntete,
+      html: true,
+      content: document.getElementById(pIdContenuPopover).innerHTML
+   };
+
+   let bouton = document.getElementById(pIdBoutonAssocie);
+
+   new bootstrap.Popover(bouton, optionsPopover);
+
 }
 
 /**
