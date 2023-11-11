@@ -332,6 +332,20 @@ function terminerQuestionnaire() {
 }
 
 /**
+ * Calcul le score total du joueur
+ * @author Maxime Foisy
+ * @returns La somme du score obtenue à chaque question
+ */
+function calculerScore() {
+   let score = 0;
+   for (const question of questionnaire) {
+      score += question.score;
+   }
+
+   return score;
+}
+
+/**
  * Ajoute un ID au modules
  * @author Maxime Foisy
  */
