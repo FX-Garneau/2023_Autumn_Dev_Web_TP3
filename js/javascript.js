@@ -5,6 +5,7 @@
 const IDTOASTAFFICHER = "afficherToast";
 const TITRETOASTPOSITIF = "Bonne réponse!";
 const TITRETOASTNEGATIF = "Bonne réponse!";
+const TEMPSAFFICHAGETOAST = 3000;
 
 /** @type {string[]} */
 var listCategories = [];
@@ -108,43 +109,54 @@ paramètres passés.
  * @param {*} pId Id du toast selon l'endroit où il est utilisé
  * @param {*} pTitre Titre du toast selon l'endroit où il est utilisé
  * @param {*} pContenu Description du toast selon l'endroit où il est utilisé
- * @param {*} pTemps Temps en millisecondes pour avoir réalisé le questionnaire
+ * @param {*} pTemps Temps en millisecondes d'affichage du toast
  */
-function afficherToasts(pId, pTitre, pContenu) {
+function afficherToasts(pId, pTitre, pContenu, pTemps) {
 
-   //vider le toast en premier avec .innertHTML ="";
    let elementHtmlPourInsererToast = document.getElementById(pId);
+   let verifierSiToastExiste = elementHtmlPourInsererToast.querySelector(".toast");
 
-   let nouvelleDivToast = document.createElement("div");
-   nouvelleDivToast.classList.add("toast");
-   elementHtmlPourInsererToast.appendChild(nouvelleDivToast);
+   let nouvelElementH3Titre, nouvelElementPContenu;
 
-   let nouvelleDivToastHeader = document.createElement("div");
-   nouvelleDivToastHeader.classList.add("toast-header");
-   nouvelleDivToast.appendChild(nouvelleDivToastHeader);
+   if (verifierSiToastExiste) {
+      nouvelElementH3Titre = verifierSiToastExiste.querySelector(".me-auto");
+      nouvelElementPContenu = verifierSiToastExiste.querySelector(".toast-body p");
 
-   let nouvelElementH3Titre = document.createElement("strong");
-   nouvelElementH3Titre.classList.add("me-auto");
-   nouvelElementH3Titre.textContent = pTitre;
-   nouvelleDivToastHeader.appendChild(nouvelElementH3Titre);
+      nouvelElementH3Titre.textContent = pTitre;
+      nouvelElementPContenu.textContent = pContenu;
+      pTemps = TEMPSAFFICHAGETOAST;
+   } else {
+      let nouvelleDivToast = document.createElement("div");
+      nouvelleDivToast.className = "toast d-inline-block";
+      elementHtmlPourInsererToast.appendChild(nouvelleDivToast);
 
-   let nouvelElementBoutonFermer = document.createElement("button");
-   nouvelElementBoutonFermer.classList.add("btn-close");
-   nouvelElementBoutonFermer.setAttribute("data-bs-dismiss", "toast");
-   nouvelElementBoutonFermer.setAttribute("aria-label", "Close");
-   nouvelleDivToastHeader.appendChild(nouvelElementBoutonFermer);
+      let nouvelleDivToastHeader = document.createElement("div");
+      nouvelleDivToastHeader.classList.add("toast-header");
+      nouvelleDivToast.appendChild(nouvelleDivToastHeader);
 
-   let nouvelleDivToastBody = document.createElement("div");
-   nouvelleDivToastBody.classList.add("toast-body");
-   nouvelleDivToast.appendChild(nouvelleDivToastBody);
+      nouvelElementH3Titre = document.createElement("strong");
+      nouvelElementH3Titre.classList.add("me-auto");
+      nouvelElementH3Titre.textContent = pTitre;
+      nouvelleDivToastHeader.appendChild(nouvelElementH3Titre);
 
-   let nouvelElementPContenu = document.createElement("p");
-   nouvelElementPContenu.textContent = pContenu;
-   nouvelleDivToastBody.appendChild(nouvelElementPContenu);
+      let nouvelElementBoutonFermer = document.createElement("button");
+      nouvelElementBoutonFermer.classList.add("btn-close");
+      nouvelElementBoutonFermer.setAttribute("data-bs-dismiss", "toast");
+      nouvelElementBoutonFermer.setAttribute("aria-label", "Close");
+      nouvelleDivToastHeader.appendChild(nouvelElementBoutonFermer);
 
-   // let nouvelElementPTemps = document.createElement("p");
-   // nouvelElementPTemps.textContent = pTemps;
-   // nouvelleDivToastBody.appendChild(nouvelElementPTemps);
+      let nouvelleDivToastBody = document.createElement("div");
+      nouvelleDivToastBody.classList.add("toast-body");
+      nouvelleDivToast.appendChild(nouvelleDivToastBody);
+
+      nouvelElementPContenu = document.createElement("p");
+      nouvelElementPContenu.textContent = pContenu;
+      nouvelleDivToastBody.appendChild(nouvelElementPContenu);
+
+   }
+
+   let optionAffichageToast = { delay: pTemps };
+   new bootstrap.Toast(elementHtmlPourInsererToast, optionAffichageToast).show();
 }
 
 /**
@@ -155,10 +167,10 @@ mauvaise) et l’affiche dans un toast si le paramètre est true
  */
 function afficherRetroaction(pEstRetroToasts, idToast) {
    if (pEstRetroToasts) {
-      afficherToasts(idToast, TITRETOASTPOSITIF, questionnaire[numeroQuestion].retroactionPositive);
+      afficherToasts(idToast, TITRETOASTPOSITIF, questionnaire[numeroQuestion].retroactionPositive, TEMPSAFFICHAGETOAST);
    }
    else {
-      afficherToasts(idToast, TITRETOASTNEGATIF, questionnaire[numeroQuestion].retroactionNegative);
+      afficherToasts(idToast, TITRETOASTNEGATIF, questionnaire[numeroQuestion].retroactionNegative, TEMPSAFFICHAGETOAST);
    }
 }
 
