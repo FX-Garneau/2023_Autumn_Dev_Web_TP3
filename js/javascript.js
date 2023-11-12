@@ -99,6 +99,7 @@ function afficherCards() {
       creerCards(cheminImage, titreImage, descriptionImage);
    }
 }
+
 /**
  * Fonction qui permet de créer la structure du toasts à partir des
 paramètres passés.
