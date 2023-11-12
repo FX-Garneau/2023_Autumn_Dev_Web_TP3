@@ -69,6 +69,7 @@ function creerCards(pImage, pTitre, pDescription) {
    let nouvElementImg = document.createElement("img");
    nouvElementImg.classList.add("card-img-bottom");
    nouvElementImg.setAttribute("src", pImage);
+   nouvElementImg.setAttribute("alt", pTitre);
    nouvElementDiv.appendChild(nouvElementImg);
 
    let nouvElementDivCardBody = document.createElement("div");
@@ -100,6 +101,7 @@ function afficherCards() {
       creerCards(cheminImage, titreImage, descriptionImage);
    }
 }
+
 /**
  * Fonction qui permet de créer la structure du toasts à partir des
 paramètres passés.
@@ -204,6 +206,8 @@ function afficherModulesSelonFiltre(filtrer) {
  */
 function creerQuestionnaire() {
 
+   document.getElementById("creationQuestionnaire").disabled = true;
+
    let banqueQuestion = [];
 
    questionnaire = [];
@@ -223,8 +227,14 @@ function creerQuestionnaire() {
 
    if (nbQuestions > banqueQuestion.length) {
       nbQuestions = banqueQuestion.length;
-      elementNbQuestion.value = banqueQuestion.length;
-      //Ajouter popup de changement du nb de question
+   }
+   if (nbQuestions < 1) {
+      nbQuestions = 1;
+      elementNbQuestion.value = 1;
+   }
+   if (nbQuestions > 5) {
+      nbQuestions = 5;
+      elementNbQuestion.value = 5;
    }
 
    for (let index = 0; index < nbQuestions; index++) {
@@ -279,6 +289,7 @@ function afficherQuestionSuivante(pNumeroQuestion) {
             let labelReponse = document.createElement("label");
             labelReponse.className = "form-check-label";
             labelReponse.textContent = reponse;
+            labelReponse.setAttribute("for", reponse);
             nouvelleReponse.appendChild(labelReponse);
          }
          if (question.typeQuestion === "radio") {
@@ -293,6 +304,7 @@ function afficherQuestionSuivante(pNumeroQuestion) {
             let labelReponse = document.createElement("label");
             labelReponse.className = "form-check-label";
             labelReponse.textContent = reponse;
+            labelReponse.setAttribute("for", reponse);
             nouvelleReponse.appendChild(labelReponse);
          }
 

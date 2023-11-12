@@ -5,3 +5,22 @@
 @import "partials/_bootstrap";
 
 /*** Début des styles personnalisés ***/
+
+#btnFiltre {
+   background-color: $gray-700 !important;
+   color: $light !important;
+}
+
+#flush-collapseOne {
+   @extend #btnFiltre;
+   background-color: $gray-600 !important;
+}
+
+.card {
+   background-color: $orange-100 !important;
+}
+
+.questionnaire {
+   background-color: $blue-800;
+   color: $light;
+}
