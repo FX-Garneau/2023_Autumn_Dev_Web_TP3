@@ -2,8 +2,9 @@
 "use strict";
 
 // Globals
-const IDTOASTAFFICHER = "div";
-const TITRETOAST = "Bonne réponse!";
+const IDTOASTAFFICHER = "afficherToast";
+const TITRETOASTPOSITIF = "Bonne réponse!";
+const TITRETOASTNEGATIF = "Bonne réponse!";
 
 /** @type {string[]} */
 var listCategories = [];
@@ -139,9 +140,9 @@ function afficherToasts(pId, pTitre, pContenu) {
    nouvelElementPContenu.textContent = pContenu;
    nouvelleDivToastBody.appendChild(nouvelElementPContenu);
 
-   let nouvelElementPTemps = document.createElement("p");
-   nouvelElementPTemps.textContent = pTemps;
-   nouvelleDivToastBody.appendChild(nouvelElementPTemps);
+   // let nouvelElementPTemps = document.createElement("p");
+   // nouvelElementPTemps.textContent = pTemps;
+   // nouvelleDivToastBody.appendChild(nouvelElementPTemps);
 }
 
 /**
@@ -152,10 +153,10 @@ mauvaise) et l’affiche dans un toast si le paramètre est true
  */
 function afficherRetroaction(pEstRetroToasts, idToast) {
    if (pEstRetroToasts) {
-      afficherToasts(idToast, TITRETOAST, DATA_QUIZ.banque_questions.retroactionPositive);
+      afficherToasts(idToast, TITRETOASTPOSITIF, questionnaire[numeroQuestion].retroactionPositive);
    }
    else {
-      afficherToasts(idToast, TITRETOAST, DATA_QUIZ.banque_questions.retroactionNegative);
+      afficherToasts(idToast, TITRETOASTNEGATIF, questionnaire[numeroQuestion].retroactionNegative);
    }
 }
 
@@ -319,9 +320,12 @@ function validerReponse(pNumeroQuestion) {
 
       if (questionnaire[pNumeroQuestion].score == question.reponses.length) {
          questionnaire[pNumeroQuestion].reussi = true;
+         /**Mettre retroaction positive */
+         afficherRetroaction(true, IDTOASTAFFICHER);
       }
       else {
-
+         /**Mettre rétroaction négative */
+         afficherRetroaction(false, IDTOASTAFFICHER);
       }
 
       numeroQuestion++;
