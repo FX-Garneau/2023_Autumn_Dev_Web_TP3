@@ -68,6 +68,7 @@ function creerCards(pImage, pTitre, pDescription) {
    let nouvElementImg = document.createElement("img");
    nouvElementImg.classList.add("card-img-bottom");
    nouvElementImg.setAttribute("src", pImage);
+   nouvElementImg.setAttribute("alt", pTitre);
    nouvElementDiv.appendChild(nouvElementImg);
 
    let nouvElementDivCardBody = document.createElement("div");
@@ -287,6 +288,7 @@ function afficherQuestionSuivante(pNumeroQuestion) {
             let labelReponse = document.createElement("label");
             labelReponse.className = "form-check-label";
             labelReponse.textContent = reponse;
+            labelReponse.setAttribute("for", reponse);
             nouvelleReponse.appendChild(labelReponse);
          }
          if (question.typeQuestion === "radio") {
@@ -301,6 +303,7 @@ function afficherQuestionSuivante(pNumeroQuestion) {
             let labelReponse = document.createElement("label");
             labelReponse.className = "form-check-label";
             labelReponse.textContent = reponse;
+            labelReponse.setAttribute("for", reponse);
             nouvelleReponse.appendChild(labelReponse);
          }
 
