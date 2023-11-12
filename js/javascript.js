@@ -42,6 +42,7 @@ function attachEventListeners() {
    $id("afficherTout").addEventListener("click", () => { afficherModulesSelonFiltre(false); });
    $id("creationQuestionnaire").addEventListener("click", () => { creerQuestionnaire(); });
    $id("questionSuivante").addEventListener("click", () => { validerReponse(numeroQuestion); });
+   $id("btnMesReponse").addEventListener("click", () => { ConsulterReponses("test"); });
 
 }
 
@@ -364,6 +365,34 @@ function validerReponse(pNumeroQuestion) {
 function terminerQuestionnaire() {
    document.getElementById("btnMesReponse").disabled = false;
 }
+
+/**
+ * Fonction qui permet d'afficher les réponses ave le score
+ * @param {*} idOffCanevas id de l'élement HTML où les réponses doivent s'afficher
+ */
+function ConsulterReponses(idOffCanevas) {
+   let endroitAffficherReponse = document.getElementById("test");
+
+   for (let question of questionnaire) {
+      let nouvelDiv = document.createElement("div");
+      endroitAffficherReponse.append(nouvelDiv);
+
+      let titreQuestion = document.createElement("p");
+      titreQuestion.className = "fs-5 fw-bold";
+      titreQuestion.textContent = question.titre;
+      nouvelDiv.append(titreQuestion);
+
+      let scoreParQuestion = document.createElement("p");
+      scoreParQuestion.textContent = `Vous avez obtenu: ${question.score} point(s)`;
+      nouvelDiv.append(scoreParQuestion);
+   }
+
+   let scoreTotal = document.createElement("p");
+   scoreTotal.textContent = `Votre score final est de ${calculerScore()} points `;
+   endroitAffficherReponse.append(scoreTotal);
+}
+
+
 
 /**
  * Calcul le score total du joueur
