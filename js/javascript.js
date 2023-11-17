@@ -4,7 +4,7 @@
 // Globals
 const IDTOASTAFFICHER = "afficherToast";
 const TITRETOASTPOSITIF = "Bonne réponse!";
-const TITRETOASTNEGATIF = "Bonne réponse!";
+const TITRETOASTNEGATIF = "Mauvaise réponse!";
 const TEMPSAFFICHAGETOAST = 3000;
 
 /** @type {string[]} */
@@ -122,8 +122,8 @@ function afficherToasts(pId, pTitre, pContenu, pTemps) {
    if (verifierSiToastExiste) {
       nouvelElementH3Titre = verifierSiToastExiste.querySelector(".me-auto");
       nouvelElementPContenu = verifierSiToastExiste.querySelector(".toast-body p");
-
       nouvelElementH3Titre.textContent = pTitre;
+      couleurValidation(pTitre, verifierSiToastExiste);
       nouvelElementPContenu.textContent = pContenu;
       pTemps = TEMPSAFFICHAGETOAST;
    } else {
@@ -138,6 +138,7 @@ function afficherToasts(pId, pTitre, pContenu, pTemps) {
       nouvelElementH3Titre = document.createElement("strong");
       nouvelElementH3Titre.classList.add("me-auto");
       nouvelElementH3Titre.textContent = pTitre;
+      couleurValidation(pTitre, nouvelleDivToast);
       nouvelleDivToastHeader.appendChild(nouvelElementH3Titre);
 
       let nouvelElementBoutonFermer = document.createElement("button");
@@ -158,6 +159,22 @@ function afficherToasts(pId, pTitre, pContenu, pTemps) {
 
    let optionAffichageToast = { delay: pTemps };
    new bootstrap.Toast(elementHtmlPourInsererToast, optionAffichageToast).show();
+}
+
+/**
+ * Permet de mettre le toast en vert ou en rouge selon si la réponse est bonne ou non
+ * @param {*} pTitre titre du toast à partir la validation est faite
+ * @param {*} pElementHTML Element HTML auquel la classe de validation est appliquée
+ */
+function couleurValidation(pTitre, pElementHTML) {
+   if (pTitre == TITRETOASTPOSITIF) {
+      pElementHTML.classList.add("border");
+      pElementHTML.classList.add("border-success");
+   }
+   else {
+      pElementHTML.classList.add("border");
+      pElementHTML.classList.add("border-danger");
+   }
 }
 
 /**
