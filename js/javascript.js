@@ -284,13 +284,14 @@ function afficherQuestionSuivante(pNumeroQuestion) {
       sectionReponse.innerHTML = '';
 
       for (const reponse of question.choixReponses) {
-         let i = 0;
+         /** @author Ulric Huot - Bug Fix */
+         let i = question.choixReponses.indexOf(reponse);
 
          let nouvelleReponse = document.createElement("div");
          nouvelleReponse.className = "form-check col-12 m-4";
          sectionReponse.appendChild(nouvelleReponse);
 
-         if (question.typeQuestion == "check") {
+         if (question.typeQuestion === "check") {
             let inputReponse = document.createElement("input");
             inputReponse.type = "checkbox";
             inputReponse.className = "form-check-input reponse";
@@ -305,7 +306,7 @@ function afficherQuestionSuivante(pNumeroQuestion) {
             labelReponse.setAttribute("for", reponse);
             nouvelleReponse.appendChild(labelReponse);
          }
-         if (question.typeQuestion === "radio") {
+         else if (question.typeQuestion === "radio") {
             let inputReponse = document.createElement("input");
             inputReponse.type = "radio";
             inputReponse.className = "form-check-input reponse";
@@ -320,43 +321,42 @@ function afficherQuestionSuivante(pNumeroQuestion) {
             labelReponse.setAttribute("for", reponse);
             nouvelleReponse.appendChild(labelReponse);
          }
-
-         i++;
       }
    }
 }
 
 /**
  * Vérifie les réponses entrées dans le questionnaire et ajoute un score ainsi qu'une mention réussi ou non à la question du questionnaire
- * @author Maxime Foisy
  * @param {int} pNumeroQuestion Indice de la question qui est afficher présentement
+ * @author Maxime Foisy, Ulric Huot
  */
 function validerReponse(pNumeroQuestion) {
-   if (pNumeroQuestion < questionnaire.length) {
-      let reponseHTML = document.querySelectorAll(".reponse");
-      let question = questionnaire[pNumeroQuestion];
+   let question = questionnaire[pNumeroQuestion];
+   if (!question) return;
 
-      for (let index = 0; index < reponseHTML.length; index++) {
-         const reponse = reponseHTML[index];
-         if (reponse.checked && index in question.reponses) {
-            questionnaire[pNumeroQuestion].score++;
-         }
-      }
+   /** @author Ulric Huot - Optimization + Bug Fix */
+   question.score += Array.from(document.querySelectorAll(".reponse"))
+      .filter((reponse, i) => reponse.checked && question.reponses.includes(i)).length;
+   // for (let index = 0; index < options.length; index++) {
+   //    const reponse = options[index];
+   //    if (reponse.checked && index in question.reponses) {
+   //       questionnaire[pNumeroQuestion].score++;
+   //    }
+   // }
 
-      if (questionnaire[pNumeroQuestion].score == question.reponses.length) {
-         questionnaire[pNumeroQuestion].reussi = true;
-         /**Mettre retroaction positive */
-         afficherRetroaction(true, IDTOASTAFFICHER);
-      }
-      else {
-         /**Mettre rétroaction négative */
-         afficherRetroaction(false, IDTOASTAFFICHER);
-      }
+   /** @author Ulric Huot - Optimization + Bug Fix */
+   afficherRetroaction(question.reussi = question.score == question.reponses.length, IDTOASTAFFICHER);
+   // if (questionnaire[pNumeroQuestion].score == question.reponses.length) {
+   //    questionnaire[pNumeroQuestion].reussi = true;
+   //    /**Mettre retroaction positive */
+   //    afficherRetroaction(true, IDTOASTAFFICHER);
+   // }
+   // else {
+   //    /**Mettre rétroaction négative */
+   //    afficherRetroaction(false, IDTOASTAFFICHER);
+   // }
 
-      numeroQuestion++;
-   }
-
-   afficherQuestionSuivante(numeroQuestion);
+   afficherQuestionSuivante(++numeroQuestion);
 }
 
 /**
@@ -393,9 +393,15 @@ function consulterReponses() {
    function blockQuestion(question, id) {
       let [div, tag, titre, reponse, score] = ["div", "h4", "p", "p", "p"].map(e => $new(e));
       div.append(tag, titre, reponse, score);
-      div.className = "mb-4";
-      tag.className = "fs-5 fw-bold";
-      tag.textContent = `Question ${id} Module ${+(question.modulesId).padStart(2, "0")} (${DATA_QUIZ.modules[question.modulesId].titre})`;
+      div.className = "mb-4 d-flex flex-column gap-3";
+      tag.className = "fs-5 fw-light";
+      tag.textContent = `Question ${id} Module ${question.modulesId.toString().padStart(2, "0")} (${DATA_QUIZ.modules[question.modulesId].titre})`;
+      titre.className = "";
+      titre.textContent = question.titre;
+      reponse.className = "";
+      reponse.textContent = `<strong>Votre réponse :</strong> ${question.reponses.map(id => question.reponses[id]).join(", ")}.`;
+      score.className = question.score > 0 ? "text-success" : "text-danger";
+      score.textContent = `Score: ${question.score} / ${question.score}`;
       return div;
    }
 }
