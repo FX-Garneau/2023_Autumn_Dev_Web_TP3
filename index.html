@@ -3,10 +3,8 @@
 
 <head>
    <meta charset="UTF-8">
-
    <!-- Pour s'assurer d'un affichage correct sur mobile -->
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
    <!-- Styles de Boostrap + Styles personnalisés provenant de styles.scss -->
    <link rel="stylesheet" href="css/styles.css">
    <!-- Nous n'aurons pas besoin de normalize.css, car il existe des styles
@@ -18,7 +16,6 @@
    <link rel="icon" href="favicon.ico" />
    <title>Questionnaire formatif</title>
 </head>
-
 
 <body>
    <header class="bg-primary">
@@ -32,9 +29,8 @@
       </div>
    </header>
    <main>
-      <img class="img-fluid" src="images/hero.jpg" alt="bannière">
-
       <div class="container">
+         <img class="img-fluid" src="images/hero.jpg" alt="bannière">
          <div class="p-0 col-lg-12">
             <h2 class="my-4">Questionnaire formatif</h2>
             <div class="accordion accordion-flush mb-3" id="accordionFlushExample">
@@ -127,7 +123,7 @@
                                           <input class="form-check-input" type="checkbox" value="Autres" id="Autres"
                                              checked></input>
                                           <label class="form-check-label" for="Autres">
-                                             ...
+                                             Autres
                                           </label>
                                        </div>
                                     </div>
@@ -211,8 +207,24 @@
       </div>
    </footer>
 
-
-
+   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+      <div class="offcanvas-header">
+         <h3 class="offcanvas-title" id="offcanvasLabel"><em>Mes réponses</em></h3>
+         <!-- <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button> -->
+      </div>
+      <div class="offcanvas-body">
+         <div id="content"></div>
+         <div class="border-top my-3"></div>
+         <h3>Envoyer mes résultats</h3>
+         <form>
+            <label for="nom">Nom :</label>
+            <input type="text" class="form-control" id="nom" name="nom">
+            <label for="courriel">Courriel :</label>
+            <input type="text" class="form-control" id="courriel" name="courriel">
+            <input type="button" class="form-control mt-4 bg-danger text-white" value="Envoyer">
+         </form>
+      </div>
+   </div>
 
    <!--LIEN VERS  LES DONNÉES-->
    <script src="js/data-quiz.js"></script>

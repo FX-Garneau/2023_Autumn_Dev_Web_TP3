@@ -19,11 +19,9 @@ let numeroQuestion = 0;
 function initialisation() {
    // Ajoute un id au modules;
    ajouterModulesID();
-
    // Initialize event listeners
    attachEventListeners();
-
-   // obtenir liste des categories (NE PAS SUPRIMER)
+   /** @author Ulric Huot */
    listCategories = $all("#categories input")
       .map(opt => opt.value?.toLowerCase())
       .filter(c => c != "autres");
@@ -42,8 +40,7 @@ function attachEventListeners() {
    $id("afficherTout").addEventListener("click", () => { afficherModulesSelonFiltre(false); });
    $id("creationQuestionnaire").addEventListener("click", () => { creerQuestionnaire(); });
    $id("questionSuivante").addEventListener("click", () => { validerReponse(numeroQuestion); });
-   $id("btnMesReponse").addEventListener("click", () => { ConsulterReponses("test"); });
-
+   $id("btnMesReponse").addEventListener("click", () => { consulterReponses(); });
 }
 
 /**
@@ -194,8 +191,8 @@ function afficherRetroaction(pEstRetroToasts, idToast) {
 
 /**
  * Filtre les modules selon les critères de recherche
- * @author Ulric Huot
  * @param {boolean} filtrer Si l'on doit filtrer les modules ou non
+ * @author Ulric Huot
  */
 function filtrerModules(filtrer) {
    let module = $id("choixModule").selectedOptions[0].value?.toLowerCase();
@@ -232,11 +229,11 @@ function afficherModulesSelonFiltre(filtrer) {
 
 /**
  * Créer le questionnaire selon les modules filtrer
- * @author Maxime Foisy
+ * @author Maxime Foisy, Ulric Huot
  */
 function creerQuestionnaire() {
 
-   document.getElementById("creationQuestionnaire").disabled = true;
+   $id("creationQuestionnaire").disabled = true;
 
    let banqueQuestion = [];
 
@@ -250,29 +247,15 @@ function creerQuestionnaire() {
       }
    }
 
-   console.log(banqueQuestion);
+   /** @author Ulric Huot */
+   let nbQuestions = Math.min($id("nbQuestions")?.value || 1, 5);
 
-   let elementNbQuestion = document.getElementById("nbQuestions");
-   let nbQuestions = elementNbQuestion.value;
-
-   if (nbQuestions > banqueQuestion.length) {
-      nbQuestions = banqueQuestion.length;
-   }
-   if (nbQuestions < 1) {
-      nbQuestions = 1;
-      elementNbQuestion.value = 1;
-   }
-   if (nbQuestions > 5) {
-      nbQuestions = 5;
-      elementNbQuestion.value = 5;
-   }
-
+   /** @author Ulric Huot */
    for (let index = 0; index < nbQuestions; index++) {
-      let indiceQuestion = Math.floor(Math.random() * banqueQuestion.length);
-      questionnaire.push(banqueQuestion[indiceQuestion]);
-      questionnaire[index].score = 0;
-      questionnaire[index].reussi = false;
-      banqueQuestion.splice(indiceQuestion, 1);
+      let questionHazard = banqueQuestion.splice(Math.floor(Math.random() * banqueQuestion.length), 1)[0];
+      questionHazard.score = 0;
+      questionHazard.reussi = false;
+      questionnaire.push(questionHazard);
    }
 
    console.log(questionnaire);
@@ -386,27 +369,35 @@ function terminerQuestionnaire() {
 /**
  * Fonction qui permet d'afficher les réponses ave le score
  * @param {*} idOffCanevas id de l'élement HTML où les réponses doivent s'afficher
+ * @author Ulric Huot
  */
-function ConsulterReponses(idOffCanevas) {
-   let endroitAffficherReponse = document.getElementById("test");
+function consulterReponses() {
+   const ofc = $id("offcanvas");
+   const content = ofc.querySelector("#content");
 
-   for (let question of questionnaire) {
-      let nouvelDiv = document.createElement("div");
-      endroitAffficherReponse.append(nouvelDiv);
+   ofc.classList.add("show");
 
-      let titreQuestion = document.createElement("p");
-      titreQuestion.className = "fs-5 fw-bold";
-      titreQuestion.textContent = question.titre;
-      nouvelDiv.append(titreQuestion);
+   for (let i = 0; i < questionnaire.length; i++)
+      content.append(blockQuestion(questionnaire[i], i + 1));
 
-      let scoreParQuestion = document.createElement("p");
-      scoreParQuestion.textContent = `Vous avez obtenu: ${question.score} point(s)`;
-      nouvelDiv.append(scoreParQuestion);
+   let resultat = $new("p");
+   resultat.textContent = `Votre score final est de ${calculerScore()} points`;
+   content.append(resultat);
+
+   /**
+    * Fonction qui permet de créer un bloc de question
+    * @param {*} question La question à générer
+    * @param {number} id L'identifiant de la question
+    * @author Ulric Huot
+    */
+   function blockQuestion(question, id) {
+      let [div, tag, titre, reponse, score] = ["div", "h4", "p", "p", "p"].map(e => $new(e));
+      div.append(tag, titre, reponse, score);
+      div.className = "mb-4";
+      tag.className = "fs-5 fw-bold";
+      tag.textContent = `Question ${id} Module ${+(question.modulesId).padStart(2, "0")} (${DATA_QUIZ.modules[question.modulesId].titre})`;
+      return div;
    }
-
-   let scoreTotal = document.createElement("p");
-   scoreTotal.textContent = `Votre score final est de ${calculerScore()} points `;
-   endroitAffficherReponse.append(scoreTotal);
 }
 
 
