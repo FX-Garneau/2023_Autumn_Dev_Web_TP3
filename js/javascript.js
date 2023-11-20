@@ -41,14 +41,47 @@ function attachEventListeners() {
    $id("creationQuestionnaire").addEventListener("click", () => { creerQuestionnaire(); });
    $id("questionSuivante").addEventListener("click", () => { validerReponse(numeroQuestion); });
    $id("btnMesReponse").addEventListener("click", () => { consulterReponses(); });
+   $id("envoyer").addEventListener("click", (e) => { validerFormulaire(e); });
+}
+
+/**
+ * Valide le formulaire de contact
+ */
+function validerFormulaire(e) {
+   let nom = $id("nom");
+   let courriel = $id("courriel");
+
+   if (nom.value.length < 2) {
+      nom.classList.add("is-invalid");
+      return e.preventDefault();
+   } else if (!courriel.value.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/)) {
+      courriel.classList.add("is-invalid");
+      return e.preventDefault();
+   } else {
+      nom.classList.remove("is-invalid");
+      courriel.classList.remove("is-invalid");
+
+      let data = JSON.stringify(
+         questionnaire.map(q => ({
+            question: q.titre,
+            reponses: q.repondus.map(id => q.choixReponses[id]),
+            reussi: q.reussi
+         }))
+      );
+
+      download(`${nom.value}-${courriel.value}.json`, data);
+
+      mailto(courriel.value, "Questionnaire - " + nom.value, data);
+   }
+
 }
 
 /**
  * Fonction qui permet de créer la structure HTML pour afficher une card à
  * partir des paramètres pour personnaliser l’image, le titre et la description.
- * @param {*} pImage Image à insérer dans le haut de la cards
- * @param {*} pTitre Titre de la cards
- * @param {*} pDescription Description de la cards
+ * @param {string} pImage Image à insérer dans le haut de la cards
+ * @param {string} pTitre Titre de la cards
+ * @param {string} pDescription Description de la cards
  */
 function creerCards(pImage, pTitre, pDescription) {
    let elementHTMLPourInsererLaCards = document.getElementById("modules");
@@ -104,10 +137,10 @@ function afficherCards() {
 /**
  * Fonction qui permet de créer la structure du toasts à partir des
 paramètres passés.
- * @param {*} pId Id du toast selon l'endroit où il est utilisé
- * @param {*} pTitre Titre du toast selon l'endroit où il est utilisé
- * @param {*} pContenu Description du toast selon l'endroit où il est utilisé
- * @param {*} pTemps Temps en millisecondes d'affichage du toast
+ * @param {string} pId Id du toast selon l'endroit où il est utilisé
+ * @param {string} pTitre Titre du toast selon l'endroit où il est utilisé
+ * @param {string} pContenu Description du toast selon l'endroit où il est utilisé
+ * @param {number} pTemps Temps en millisecondes d'affichage du toast
  */
 function afficherToasts(pId, pTitre, pContenu, pTemps) {
 
@@ -160,8 +193,8 @@ function afficherToasts(pId, pTitre, pContenu, pTemps) {
 
 /**
  * Permet de mettre le toast en vert ou en rouge selon si la réponse est bonne ou non
- * @param {*} pTitre titre du toast à partir la validation est faite
- * @param {*} pElementHTML Element HTML auquel la classe de validation est appliquée
+ * @param {string} pTitre titre du toast à partir la validation est faite
+ * @param {Element} pElementHTML Element HTML auquel la classe de validation est appliquée
  */
 function couleurValidation(pTitre, pElementHTML) {
    if (pTitre == TITRETOASTPOSITIF) {
@@ -178,7 +211,7 @@ function couleurValidation(pTitre, pElementHTML) {
  * Va chercher la rétroaction de la réponse (bonne ou
 mauvaise) et l’affiche dans un toast si le paramètre est true
  * @param {boolean} pEstRetroToasts Retour de la réponse
- * @param {*} idToast Id de l'Élément HTML qui doit afficher le toast
+ * @param {string} idToast Id de l'Élément HTML qui doit afficher le toast
  */
 function afficherRetroaction(pEstRetroToasts, idToast) {
    if (pEstRetroToasts) {
@@ -266,11 +299,11 @@ function creerQuestionnaire() {
 /**
  * Affiche dans la zone de question HTML la question se trouvant à l'indice passer en paramètre
  * @author Maxime Foisy
- * @param {int} pNumeroQuestion Indice de la question à afficher
+ * @param {number} pNumeroQuestion Indice de la question à afficher
  */
 function afficherQuestionSuivante(pNumeroQuestion) {
    if (pNumeroQuestion == questionnaire.length - 1) {
-      creerPoppover('contenu-popover-reponse', 'questionSuivante', 'Questionnaire terminé');
+      creerPoppover("contenu-popover-reponse", "questionSuivante", "Questionnaire terminé");
    }
    if (pNumeroQuestion >= questionnaire.length) {
       terminerQuestionnaire();
@@ -281,7 +314,7 @@ function afficherQuestionSuivante(pNumeroQuestion) {
       document.getElementById("questionPoser").textContent = question.titre;
 
       let sectionReponse = document.getElementById("questionReponse");
-      sectionReponse.innerHTML = '';
+      sectionReponse.innerHTML = "";
 
       for (const reponse of question.choixReponses) {
          /** @author Ulric Huot - Bug Fix */
@@ -335,8 +368,8 @@ function validerReponse(pNumeroQuestion) {
    if (!question) return;
 
    /** @author Ulric Huot - Optimization + Bug Fix */
-   question.score += Array.from(document.querySelectorAll(".reponse"))
-      .filter((reponse, i) => reponse.checked && question.reponses.includes(i)).length;
+   question.repondus = Array.from(document.querySelectorAll(".reponse:checked")).map(e => +e.value);
+   question.score += question.repondus.filter(id => question.reponses.includes(id)).length;
    // for (let index = 0; index < options.length; index++) {
    //    const reponse = options[index];
    //    if (reponse.checked && index in question.reponses) {
@@ -368,7 +401,7 @@ function terminerQuestionnaire() {
 
 /**
  * Fonction qui permet d'afficher les réponses ave le score
- * @param {*} idOffCanevas id de l'élement HTML où les réponses doivent s'afficher
+ * @param {string} idOffCanevas id de l'élement HTML où les réponses doivent s'afficher
  * @author Ulric Huot
  */
 function consulterReponses() {
@@ -378,11 +411,18 @@ function consulterReponses() {
    ofc.classList.add("show");
 
    for (let i = 0; i < questionnaire.length; i++)
-      content.append(blockQuestion(questionnaire[i], i + 1));
+      content.append(blockReview(questionnaire[i], i + 1));
 
-   let resultat = $new("p");
-   resultat.textContent = `Votre score final est de ${calculerScore()} points`;
-   content.append(resultat);
+   let score = calculerScore();
+   let total = calculerTotalPoints();
+   let note = score / total * 100;
+   let [div, title, texte, resultat, pourcent] = ["div", "h3", "p", "p", "p"].map(e => $new(e));
+   div.append(title, texte, resultat, pourcent);
+   title.textContent = "Votre score";
+   texte.textContent = "Voici le total de vos points :";
+   resultat.innerHTML = `<strong>Bonnes réponses<br>${score} / ${total}</strong>`;
+   pourcent.innerHTML = `<strong>Note</strong><br><span style="font-weight: bolder; color: ${gradeColor(note)}">${note.toFixed(2)}%</span>`;
+   content.append(div);
 
    /**
     * Fonction qui permet de créer un bloc de question
@@ -390,18 +430,25 @@ function consulterReponses() {
     * @param {number} id L'identifiant de la question
     * @author Ulric Huot
     */
-   function blockQuestion(question, id) {
-      let [div, tag, titre, reponse, score] = ["div", "h4", "p", "p", "p"].map(e => $new(e));
-      div.append(tag, titre, reponse, score);
+   function blockReview(question, id) {
+      let accent = question.score > 0 ? "success" : "danger";
+      let [div, tag, titre, reponse, score, box, icon, note] = ["div", "h4", "p", "p", "p", "div", "i", "p"].map(e => $new(e));
+      div.append(tag, titre, reponse, score, box);
       div.className = "mb-4 d-flex flex-column gap-3";
       tag.className = "fs-5 fw-light";
-      tag.textContent = `Question ${id} Module ${question.modulesId.toString().padStart(2, "0")} (${DATA_QUIZ.modules[question.modulesId].titre})`;
-      titre.className = "";
-      titre.textContent = question.titre;
-      reponse.className = "";
-      reponse.textContent = `<strong>Votre réponse :</strong> ${question.reponses.map(id => question.reponses[id]).join(", ")}.`;
-      score.className = question.score > 0 ? "text-success" : "text-danger";
-      score.textContent = `Score: ${question.score} / ${question.score}`;
+      tag.innerText = `Question ${id} Module ${question.modulesId.toString().padStart(2, "0")} (${DATA_QUIZ.modules[question.modulesId].titre})`;
+      titre.innerText = question.titre;
+      reponse.innerHTML = `<strong>Votre réponse :</strong> ${escapeHtml(question.repondus.map(id => question.choixReponses[id]).join(", "))}.`;
+      score.className = `text-${accent}`;
+      score.innerText = `Score: ${question.score} / ${question.reponses.length}`;
+      box.className = "d-flex justify-content-between align-items-center gap-3";
+      icon.className = `fa-solid fa-${question.score > 0 ? "check" : "x"} text-${accent}`;
+      icon.style.fontSize = "300%";
+      icon.style.marginInline = "1rem";
+      note.className = `bg-${accent} text-white p-3`;
+      note.style.borderRadius = "2rem";
+      note.innerText = question.score > 0 ? question.retroactionPositive : question.retroactionNegative;
+      box.append(icon, note);
       return div;
    }
 }
@@ -411,23 +458,31 @@ function consulterReponses() {
 /**
  * Calcul le score total du joueur
  * @author Maxime Foisy
- * @returns La somme du score obtenue à chaque question
  */
 function calculerScore() {
    let score = 0;
-   for (const question of questionnaire) {
+   for (const question of questionnaire)
       score += question.score;
-   }
-
    return score;
 }
 
 /**
+ * Calcul les total de points possible pour le questionnaire
+ * @author Ulric Huot
+ */
+function calculerTotalPoints() {
+   let total = 0;
+   for (const question of questionnaire)
+      total += question.reponses.length;
+   return total;
+}
+
+/**
  * Affiche un popover sur un bouton passé en paramêtre
- * @author Maxime Foisy
  * @param {string} pIdContenuPopover Id de la div qui contient le contenu a afficher dans le popover
  * @param {string} pIdBoutonAssocie Id du bouton où le popover doit être afficher
  * @param {string} pEntete Titre du popover
+ * @author Maxime Foisy
  */
 function creerPoppover(pIdContenuPopover, pIdBoutonAssocie, pEntete) {
 
